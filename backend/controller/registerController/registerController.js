@@ -1,4 +1,4 @@
-const {getAllUsers, registerUser} = require('../../services/registerService/registerUser');
+const {getAllUsers, registerUser, verifyMail} = require('../../services/registerService/registerUser');
 const User = require('../../models/userModel/User');
 
 class UserController {
@@ -8,18 +8,12 @@ class UserController {
     }
 
     async registerUser(req, res) {
-        // const {username, email, password} = req.body;
-        // const newUser = new User({
-        //     username: username,
-        //     email: email,
-        //     password: password,
-        //   });
-        // const newUser = new User({
-        //     username: 'john_doe',
-        //     email: 'john@example.com',
-        //     password: 'password123',
-        //   });
         const user = await registerUser(req);
+        return res.status(201).json(user);
+    }
+
+    async verifyMail(req, res){
+        const user = await verifyMail(req);
         return res.status(201).json(user);
     }
 }

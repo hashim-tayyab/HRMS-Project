@@ -7,4 +7,6 @@ router.get('/allusers', registerController.getAllUsers);
 
 router.post('/user', registerController.registerUser);
 
+router.get('/verifymail', registerController.verifyMail);
+
 module.exports = router;

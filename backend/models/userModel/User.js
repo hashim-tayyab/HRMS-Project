@@ -15,6 +15,22 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
+    phone:{
+        type:String, 
+        required: true
+    },
+    gender:{
+        type:String,
+        required:true
+    },
+    token:{
+        type:String
+    },
+    isVerified:{
+        type:Boolean,
+        default:false
+    }
+
 });
 
 module.exports = mongoose.model("User", userSchema);
