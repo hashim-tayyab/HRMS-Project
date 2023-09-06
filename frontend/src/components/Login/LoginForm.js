@@ -1,6 +1,9 @@
 import React from 'react'
 import {Formik } from 'formik';
 import { loginSchema } from './LoginSchema';
+import { redirect , useNavigate} from 'react-router-dom';
+import axios from 'axios';
+import PaymentPage from '../Payment/PaymentForm';
 
 
 
@@ -11,13 +14,27 @@ const initialValues={
 };
 
 function LoginForm() {  
+  const navigate = useNavigate();
   return (
     <Formik
     initialValues= {initialValues}
     validationSchema= {loginSchema}
-    onSubmit={ (values) =>{
-      "Submitted"
-      console.log(values);
+    onSubmit= { (values) =>{
+     axios.post('http://localhost:4000/login', {
+        email: values.email,
+        password: values.password,
+      }).then(res => {
+        if(res.status == 200){
+          navigate("/payment");
+        }
+      }).catch((err) => {
+        if (err.response && err.response.status === 401) {
+          navigate("/login");
+        }
+
+      })
+
+
     }}>
     
 {({values, errors, touched, handleBlur, handleChange, handleSubmit}) => (

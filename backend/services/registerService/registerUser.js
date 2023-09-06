@@ -1,8 +1,10 @@
 const User = require('../../models/userModel/User');
 const crypto = require('crypto');
 const sgMail = require('@sendgrid/mail');
-// sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-sgMail.setApiKey("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");
+require('dotenv').config();
+const apikey = process.env.SENDGRID_API_KEY;
+sgMail.setApiKey(apikey);
+
 
 class UserService {
     async getAllUsers() {

@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@stripe/react-stripe-js": "^2.1.2",
+    "@stripe/stripe-js": "^2.1.2",
     "axios": "^1.5.0",
+    "dotenv": "^16.3.1",
     "formik": "^2.4.3",
     "formik-persist-values": "^1.4.1",
     "react": "^18.2.0",
