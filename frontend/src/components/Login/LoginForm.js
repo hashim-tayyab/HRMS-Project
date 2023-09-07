@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useContext , useState} from 'react'
 import {Formik } from 'formik';
 import { loginSchema } from './LoginSchema';
-import { redirect , useNavigate} from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import axios from 'axios';
-import PaymentPage from '../Payment/PaymentForm';
+import { useAuth } from '../Context/Usercontext';
 
 
 
@@ -14,12 +14,20 @@ const initialValues={
 };
 
 function LoginForm() {  
+
+  const auth = useAuth();
+  const [user, setUser] = useState();
+
+
   const navigate = useNavigate();
   return (
     <Formik
     initialValues= {initialValues}
     validationSchema= {loginSchema}
     onSubmit= { (values) =>{
+      setUser(values);
+      auth.login(user);
+      // setUser()
      axios.post('http://localhost:4000/login', {
         email: values.email,
         password: values.password,

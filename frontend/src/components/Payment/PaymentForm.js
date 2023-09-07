@@ -1,8 +1,7 @@
-
-
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 import { CardNumberElement, CardCvcElement, CardExpiryElement, useStripe, useElements} from '@stripe/react-stripe-js';
 import axios from 'axios';
+// import { UserContext } from '../Context/Usercontext';
 // import './paymentForm.css';
 
 
@@ -26,6 +25,8 @@ const CARD_OPTIONS = {
 }
 
 export default function PaymentForm() {
+
+    // const [currentUser, setCurrentUser] = useContext(UserContext);
 
     const [success, setSuccess] = useState(false);//useState hook to create the success state,
     const stripe = useStripe();//tripe variable with the useStripe hook imported from stripe-react-js
