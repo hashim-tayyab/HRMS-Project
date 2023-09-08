@@ -1,4 +1,5 @@
-const {loginUser} = require('../../services/loginService/loginUser');
+const {loginUser, getUserById} = require('../../services/loginService/loginUser');
+const jwt = require('jsonwebtoken');
 
 class LoginUserController {
     async loginUser(req, res) {
@@ -6,7 +7,7 @@ class LoginUserController {
             const user = await loginUser(req);
             if(user) {
                 console.log('User Passed');
-                return res.status(200).json({message: 'Success'});
+                return res.status(200).json({message: 'Success', user:user});
             }
             else{
                 console.log('User Failed');
@@ -16,6 +17,13 @@ class LoginUserController {
             console.log(error);
         }
     }
+
+    async getUserById(req, res) {
+        const user = await getUserById(req);
+        return res.status(200).json(user);
+    }
+
+
 }
 
 module.exports = new LoginUserController();
