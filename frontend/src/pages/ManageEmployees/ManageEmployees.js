@@ -11,13 +11,6 @@ function ManageEmployees() {
             console.log(res.data)
             setEmployees(res.data);
         });
-        // setEmployees(
-        
-            // );
-        // console.log("employeeList", employeeList);
-        // employeeList.then(res => {
-        //     setEmployees(res.data);
-        // })
     }
     getUsers();
 },[]);
