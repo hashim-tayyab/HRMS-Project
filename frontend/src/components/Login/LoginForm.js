@@ -1,12 +1,8 @@
-import React, { useContext , useState} from 'react'
+import React from 'react'
 import {Formik } from 'formik';
 import { loginSchema } from './LoginSchema';
 import { useNavigate} from 'react-router-dom';
 import axios from 'axios';
-import { useAuth } from '../Context/Usercontext';
-
-
-
 
 const initialValues={
   email: "",
@@ -15,9 +11,6 @@ const initialValues={
 
 function LoginForm() {  
 
-  const auth = useAuth();
-  const [user, setUser] = useState();
-
 
   const navigate = useNavigate();
   return (
@@ -25,14 +18,12 @@ function LoginForm() {
     initialValues= {initialValues}
     validationSchema= {loginSchema}
     onSubmit= { (values) =>{
-      setUser(values);
-      auth.login(user);
-      // setUser()
      axios.post('http://localhost:4000/login', {
         email: values.email,
         password: values.password,
       }).then(res => {
         if(res.status == 200){
+          localStorage.setItem('token', res.data.user.token);
           navigate("/payment");
         }
       }).catch((err) => {
