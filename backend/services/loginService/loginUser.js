@@ -8,7 +8,6 @@ class LoginUserService {
                 email: req.body.email
             });
             if(user.password === req.body.password) {
-                // console.log("UNDERDCORE ID:", res.data._id);
                 const token = jwt.sign({
                 id: user._id
               }, 'secret123', {

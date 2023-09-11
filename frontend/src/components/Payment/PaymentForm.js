@@ -1,6 +1,7 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { CardNumberElement, CardCvcElement, CardExpiryElement, useStripe, useElements} from '@stripe/react-stripe-js';
 import axios from 'axios';
+import { useNavigate, Navigate } from 'react-router-dom';
 
 
 const CARD_OPTIONS = {
@@ -24,11 +25,22 @@ const CARD_OPTIONS = {
 
 export default function PaymentForm() {
 
+    const navigate = useNavigate();
     const [success, setSuccess] = useState(false);//useState hook to create the success state,
     const stripe = useStripe();//tripe variable with the useStripe hook imported from stripe-react-js
     const elements = useElements();//elements variable that you will use in your application to collect and process user’s payment details
+    
+    useEffect(() => {
+      const getPayment = async () => {
+      const paidResponse = await axios.get(`http://localhost:4000/paymentdetail/${decodedToken}`);
+      console.log("paidresponse:", paidResponse.data.hasPaid);
+      setHasPaid(paidResponse.data.hasPaid);
+      }
+      getPayment();
+    }, [hasPaid])
+    const [hasPaid, setHasPaid] = useState(null);
 
- 
+
 
 
     const handleSubmit = async (e) =>{
@@ -63,7 +75,12 @@ export default function PaymentForm() {
             console.log(error.message)
         }
     }
+
+    
    return (
+    <>
+    {hasPaid? 
+    (
      <div>
        {!success ? (
          <form className='myForm' onSubmit={handleSubmit}>
@@ -96,9 +113,21 @@ export default function PaymentForm() {
        ) : (
          <div className="payment-success">
            <h2>Payment successful</h2>
-           <h3 className="Thank-you">Thank you for your patronage</h3>
+           <h3 className="Thank-you">Thank you for you payment</h3>
+           <button onClick={() => navigate('/dashboard')}></button>
          </div>
        )}
      </div>
+    )
+    :
+    (
+      <>
+       <Navigate to="/dashboard" replace />;
+      </>
+    )}
+       </>
    );
-}
+
+
+
+  }

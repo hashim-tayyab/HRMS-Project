@@ -2,6 +2,7 @@ const express = require('express');
 const registerController= require('../controller/registerController/registerController');
 const loginController = require('../controller/loginController/loginController');
 const employeeController = require('../controller/employeeController/employeeController');
+const paymentController = require('../controller/paymentController/paymentController');
 const router = express.Router();
 const {MakePayment} = require('../utility/stripe/stripeConfig')
 
@@ -20,10 +21,14 @@ router.get('/getuser/:userId', loginController.getUserById);
 //Employee Routes
 router.post('/addemployee', employeeController.addEmployee);
 router.get('/getemployees', employeeController.getEmployeesList);
+router.get('/getmyemployees/:manager', employeeController.getMyAddedEmployees);
+router.post('/loginemployee', employeeController.loginAsEmployee);
+router.get('/employee/:userId', employeeController.getEmployeeById);
 
 
 //Payment Routes
 router.post('/makepayment', MakePayment);
+router.get('/paymentdetail/:userId', paymentController.getPaymentDetails);
 
 
 module.exports = router;

@@ -7,7 +7,7 @@ class LoginUserController {
             const user = await loginUser(req);
             if(user) {
                 console.log('User Passed');
-                return res.status(200).json({message: 'Success', user:user});
+                return res.status(200).json(user);
             }
             else{
                 console.log('User Failed');

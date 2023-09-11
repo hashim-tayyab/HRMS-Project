@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {Formik } from 'formik';
 import { loginSchema } from './LoginSchema';
 import { useNavigate} from 'react-router-dom';
 import axios from 'axios';
-import { UserContext } from '../Context/userContext';
+// import { UserContext } from '../Context/userContext';
 // import { PaymentContext } from '../Context/paymentContext';
 
 const initialValues={
@@ -11,13 +11,14 @@ const initialValues={
   password: "",
 };
 
-function LoginForm() {  
-const {currentUser, setCurrentUser} = useContext(UserContext)
+function EmployeeLogin() {  
+    const [currentEmployee, setCurrentEmployee] = useState(null);
+// const {currentUser, setCurrentUser} = useContext(UserContext)
 
-useEffect(() => {
-  // console.log(currentUser);
+// useEffect(() => {
+//   console.log(currentUser);
 
-}, [currentUser]);
+// }, [currentUser]);
 
 
   const navigate = useNavigate();
@@ -26,15 +27,15 @@ useEffect(() => {
     initialValues= {initialValues}
     validationSchema= {loginSchema}
     onSubmit = { async (values) =>{
-     const res = await axios.post('http://localhost:4000/login', {
+     const res = await axios.post('http://localhost:4000/loginemployee', {
         email: values.email,
         password: values.password,
       });
         if(res.status == 200){
           console.log(res.data);
-           await setCurrentUser(res.data);
-          localStorage.setItem('token', res.data.token);
-            navigate("/dashboard");
+           await setCurrentEmployee(res.data);
+          localStorage.setItem('empToken', res.data.token);
+            navigate("/employeedashboard");
         }
         else 
         {
@@ -82,4 +83,4 @@ useEffect(() => {
   );
 };
 
-export default LoginForm;
+export default EmployeeLogin;
