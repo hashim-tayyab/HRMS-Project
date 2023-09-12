@@ -4,6 +4,7 @@ import { loginSchema } from './LoginSchema';
 import { useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import { UserContext } from '../Context/userContext';
+import { decodeToken } from 'react-jwt';
 // import { PaymentContext } from '../Context/paymentContext';
 
 const initialValues={
@@ -21,23 +22,37 @@ useEffect(() => {
 
 
   const navigate = useNavigate();
+  const refresh = () => {
+    window.location.reload(true);
+  }
   return (
     <Formik
     initialValues= {initialValues}
     validationSchema= {loginSchema}
     onSubmit = { async (values) =>{
+
+
      const res = await axios.post('http://localhost:4000/login', {
         email: values.email,
         password: values.password,
       });
         if(res.status == 200){
-          console.log(res.data);
+          console.log("res", res);
            await setCurrentUser(res.data);
           localStorage.setItem('token', res.data.token);
+          console.log("tokenDetails", decodeToken(res.data.token));
+          const isAdmin = decodeToken(res.data.token).isAdmin;
+          console.log("isAdmin", isAdmin);
+            if(isAdmin){
             navigate("/dashboard");
+            // refresh();
+          }
+          else{
+            navigate("/employeedashboard");
+            // refresh();
+          }  
         }
-        else 
-        {
+        else {
           navigate("/login");
       }
     }}>

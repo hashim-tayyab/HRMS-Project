@@ -7,12 +7,15 @@ import PaymentPage from './pages/Payment/PaymentPage';
 import MyNavbar from './components/Navbar/Navbar';
 import GetEmployees from './pages/ManageEmployees/GetEmployees';
 import Dashboard from './pages/Dashboard/Dashboard';
+
 import { UserContext } from './components/Context/userContext';
+import { StatusContext } from './components/Context/statusContext';
+
 import AddEmployees from './pages/ManageEmployees/AddEmployee';
-// import {PaymentContext} from './components/Context/paymentContext'
 import Protected from './components/Protected/Protected';
 import EmployeeLogin from './components/Login/EmployeeLogin'
 import EmployeeDashboard from './pages/EmployeeDashboard/EmployeeDashboard';
+// import Logout from './components/Logout/Logout';
 import {decodeToken } from 'react-jwt';
 import axios from 'axios';
 
@@ -21,50 +24,64 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(null);
   const [decodedToken, setDecodedToken] = useState(null);
+  const [adminStatus, setAdminStatus] = useState(false);
 
   useEffect(() =>{
       const token = localStorage.getItem('token');
       if(token !== null){
         const myDecodedToken = decodeToken(token);
       setDecodedToken(myDecodedToken.id);
+      setAdminStatus(myDecodedToken.isAdmin);
       setIsLoggedIn(true);
-      }
       const getDetails = async () => {
         if(isLoggedIn === true){
-          try{
-            const response = await axios.get(`http://localhost:4000/getuser/${decodedToken}`);
-
-            setCurrentUser(response.data);
-          } catch(err){
-            console.log("Cannot get details", err);
+          if(adminStatus === true){
+            try{
+              const response = await axios.get(`http://localhost:4000/getuser/${decodedToken}`);
+              setCurrentUser(response.data);
+            } catch(err){
+              console.log("Cannot get details", err);
+            }
+          }
+          else if(adminStatus === false){
+            try{
+              const response = await axios.get(`http://localhost:4000/employee/${decodedToken}`);
+              setCurrentUser(response.data);
+            } catch(err){
+              console.log("Cannot get details", err);
+            }
           }
         }
       }
       getDetails()
-      ;}, [isLoggedIn]);
+    }
+      else{
+        return;
+      };
+      }, [isLoggedIn, adminStatus]);
 
     return (
       <div className="App">
           <UserContext.Provider value={{currentUser, setCurrentUser}}>
-          <MyNavbar/>          
-          <Routes>
-            <Route path='/' element={<HomePage/>}/>
-            <Route path='/signup' element={<SignupForm/>} />
-            <Route path='login' element={<LoginForm/>}/>
-            
-              
-              <Route path='/payment' element={
-              <Protected isLoggedIn={false}>
-                <PaymentPage/>
-                </Protected>
-              }/>  
+            <StatusContext.Provider value={{adminStatus, setAdminStatus}}>
+              <MyNavbar/>          
+              <Routes>
+                <Route path='/' element={<HomePage/>}/>
+                <Route path='/signup' element={<SignupForm/>} />
+                <Route path='login' element={<LoginForm/>}/>
+                
+                
+                <Route path='/payment' element={<Protected isLoggedIn={false}><PaymentPage/></Protected>}/>  
+                <Route path='/payment' element={<Protected isLoggedIn={false}><PaymentPage/></Protected>}/>  
+                <Route path='/addemployee' element={<Protected isLoggedIn={false}><AddEmployees/></Protected>}/>  
+                <Route path='/getemployees' element={<Protected isLoggedIn={false}><GetEmployees/></Protected>}/>  
+                <Route path='/dashboard' element={<Protected isLoggedIn={false}><Dashboard/></Protected>}/>
 
-              <Route path='/addemployee' element={<AddEmployees/>}/>  
-            <Route path='/getemployees' element={<GetEmployees/>}/>  
-            <Route path='/dashboard' element={<Dashboard/>}/>
-            <Route path='/loginemployee' element={<EmployeeLogin/>}/>
-            <Route path='/employeedashboard' element={<EmployeeDashboard/>}/>
-          </Routes>     
+
+                <Route path='/loginemployee' element={<EmployeeLogin/>}/>
+                <Route path='/employeedashboard' element={<EmployeeDashboard/>}/>
+             </Routes>     
+          </StatusContext.Provider>
           </UserContext.Provider>   
       </div>
     );

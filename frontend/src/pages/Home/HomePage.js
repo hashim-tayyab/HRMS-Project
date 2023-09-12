@@ -19,7 +19,6 @@ function HomePage() {
           <>
             <Link to="/signup">Sign Up</Link><br/><br/>
             <Link to="/login">Login</Link><br/><br/>
-            <Link to="/loginemployee">Login as Employee</Link><br/><br/>
           </>
           )
           :

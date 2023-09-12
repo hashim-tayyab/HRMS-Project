@@ -1,4 +1,4 @@
-const User = require('../../models/userModel/User');
+const Admin = require('../../models/adminModel/Admin');
 const crypto = require('crypto');
 const sgMail = require('@sendgrid/mail');
 require('dotenv').config();
@@ -9,7 +9,7 @@ sgMail.setApiKey(apikey);
 class UserService {
     async getAllUsers() {
         try {
-            const user = await User.find();
+            const user = await Admin.find();
             return user;
         } catch (error) {
             console.log(error);
@@ -20,7 +20,7 @@ class UserService {
     async registerUser(req) {
         const {username, email, password, phone, gender} = req.body;
         const token = crypto.randomBytes(64).toString("hex");
-        const newUser = new User({
+        const newUser = new Admin({
         username: username,
         email: email,
         password: password,
@@ -44,7 +44,7 @@ class UserService {
             sgMail.send(message)
             .then(() => console.log("Email sent successfully"))
             .catch((err) => console.log(err));
-            const user = await newUser.save().then(() => console.log("User Added"));
+            const user = await newUser.save().then(() => console.log("Admin Added"));
             return user;
         } catch (error) {
             console.log(error);
@@ -55,15 +55,9 @@ class UserService {
     async verifyMail(req, res){
         try {
             console.log(req.query.token);
-            const findUser = await User.findOne({
+            const findUser = await Admin.findOne({
                 token: req.query.token,
             });
-            // if(!findUser){
-            //     return res.status(400).json({
-            //         message: "Invalid token"
-            //     })
-            // }
-            // else{
                 findUser.token = null;
                 findUser.isVerified = true;
                 console.log(findUser.email);

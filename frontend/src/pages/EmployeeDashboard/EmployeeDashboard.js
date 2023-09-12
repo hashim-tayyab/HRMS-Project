@@ -11,7 +11,7 @@ function EmployeeDashboard() {
 
 
     useEffect(() => {
-        const token = localStorage.getItem('empToken');
+        const token = localStorage.getItem('token');
         const decoded = decodeToken(token);
         const userId = decoded.id;
         const getEmployeeDetail = async () => {

@@ -1,18 +1,23 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { UserContext } from "../Context/userContext";
+import { StatusContext } from "../Context/statusContext";
 
 const Protected = ({ isLoggedIn, children }) => {
+  const navigate = useNavigate();
     const {currentUser, setCurrentUser} = useContext(UserContext);
-useEffect(() => {
-  if(currentUser){
-    isLoggedIn = true;
-    if (!isLoggedIn) {
-        return <Navigate to="/" replace />;
-      }
-  }
-}, [currentUser]);
+    const {adminStatus, setAdminStatus} = useContext(StatusContext)
 
-  return children;
-};
+  useEffect(() => {
+    console.log("adminStatus", adminStatus);
+      isLoggedIn = true;
+      if (!adminStatus) {
+        navigate('/');
+          //  <Navigate to="/" replace />;
+        }
+  }, [adminStatus, setAdminStatus]);
+
+    return children;
+  };
+
 export default Protected;

@@ -4,12 +4,21 @@ import Navbar from 'react-bootstrap/Navbar';
 // import axios from 'axios';
 import { useState, useEffect, useContext } from 'react';
 // import {decodeToken} from 'react-jwt';
+// import {Logout} from '../Logout/Logout';
 import { UserContext } from '../Context/userContext';
+import { useNavigate } from 'react-router-dom';
 
 
 function MyNavbar() {
 const {currentUser, setCurrentUser} = useContext(UserContext);
   const [isLoggedIn, setIsLoggedIn] = useState(false);  
+  const navigate = useNavigate();
+
+  const logout = () =>{
+    localStorage.removeItem('token');
+    navigate('/');
+    window.location.reload(true);
+  }
 
 useEffect(() => {
   if(currentUser){
@@ -17,7 +26,7 @@ useEffect(() => {
     // console.log(currentUser.username);
 
   }
-}, [currentUser]);
+}, [currentUser, isLoggedIn, setIsLoggedIn, setCurrentUser, logout]);
 
 
   return (
@@ -29,7 +38,8 @@ useEffect(() => {
         {isLoggedIn? 
         (
         <Navbar.Text>
-            Signed in as: <a href='/dashboard'>{currentUser.username}</a>
+            Signed in as: <a href='/'>{currentUser.username}</a>
+            <a onClick={logout}>Logout</a>
           </Navbar.Text>
           )
           :

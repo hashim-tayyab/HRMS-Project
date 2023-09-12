@@ -1,5 +1,5 @@
 const {getAllUsers, registerUser, verifyMail} = require('../../services/registerService/registerUser');
-const User = require('../../models/userModel/User');
+// const User = require('../../models/adminModel/Admin');
 
 class UserController {
     async getAllUsers(req, res) {
