@@ -3,6 +3,7 @@ const registerController= require('../controller/registerController/registerCont
 const loginController = require('../controller/loginController/loginController');
 const employeeController = require('../controller/employeeController/employeeController');
 const paymentController = require('../controller/paymentController/paymentController');
+const attendanceController = require('../controller/attendanceController/attendanceController');
 const router = express.Router();
 const {MakePayment} = require('../utility/stripe/stripeConfig')
 
@@ -24,6 +25,12 @@ router.get('/getemployees', employeeController.getEmployeesList);
 router.get('/getmyemployees/:manager', employeeController.getMyAddedEmployees);
 router.post('/loginemployee', employeeController.loginAsEmployee);
 router.get('/employee/:userId', employeeController.getEmployeeById);
+
+
+//Attendant Routes
+router.post('/addcheckin/:userId', attendanceController.addCheckInTime);
+router.post('/addcheckout/:userId', attendanceController.addCheckOutTime);
+
 
 
 //Payment Routes
