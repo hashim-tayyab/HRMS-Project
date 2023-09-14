@@ -18,14 +18,43 @@ function EmployeeDashboard() {
         const decoded = decodeToken(token);
         const userId = decoded.id;
         setUserId(userId);
+
+        var today = new Date();
+        var date = today.getDate()+'-'+(today.getMonth()+1)+ '-'+today.getFullYear();
+        setTodayDate(date);
+
         const getEmployeeDetail = async () => {
             await axios.get(`http://localhost:4000/employee/${userId}/`)
             .then((response) => {
               setEmployee(response.data);
             });
         }
+
+        const getCheckInTime = async () => {
+          // console.log('CheckINTIME');
+          const check_in = await axios.get(`http://localhost:4000/checkintime/${userId}/`)
+            if(check_in) {
+            setCheckInTime(check_in.data.userCheckedInTime);
+            }
+            else{
+              setCheckInTime('...')
+            }
+        }
+        const getCheckOutTime = async () => {
+          // console.log('CHECKOUT')
+          const check_out = await axios.get(`http://localhost:4000/checkouttime/${userId}/`)
+            if(check_out){
+            setCheckOutTime(check_out.data.userCheckedOutTime); 
+          }
+          else{
+            setCheckOutTime('...');
+          }
+        }
         getEmployeeDetail();
-    }, [])
+        getCheckInTime();
+        getCheckOutTime();
+
+    }, [setCheckInTime, setCheckOutTime])
 
     const setTime = async () => {
       var today = new Date();
@@ -47,10 +76,7 @@ function EmployeeDashboard() {
 
     const setOutTime = async () => {
       var today = new Date();
-      // var date = today.getDate()+'-'+(today.getMonth()+1)+ '-'+today.getFullYear();
       var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-      // var dateTime = time+' '+date;
-      // setCheckOutTime(dateTime);
       setCheckOutTime(time);
       setCheckedIn(false);
       try {

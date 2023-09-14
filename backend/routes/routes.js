@@ -30,6 +30,9 @@ router.get('/employee/:userId', employeeController.getEmployeeById);
 //Attendant Routes
 router.post('/addcheckin/:userId', attendanceController.addCheckInTime);
 router.post('/addcheckout/:userId', attendanceController.addCheckOutTime);
+router.get('/checkintime/:userId', attendanceController.getCheckInTime);
+router.get('/checkouttime/:userId', attendanceController.getCheckOutTime);
+
 
 
 
