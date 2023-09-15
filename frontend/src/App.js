@@ -15,6 +15,8 @@ import AddEmployees from './pages/ManageEmployees/AddEmployee';
 import Protected from './components/Protected/Protected';
 import EmployeeLogin from './components/Login/EmployeeLogin'
 import EmployeeDashboard from './pages/EmployeeDashboard/EmployeeDashboard';
+import LeaveApply from './pages/EmployeeDashboard/LeaveApply/LeaveApply';
+
 // import Logout from './components/Logout/Logout';
 import {decodeToken } from 'react-jwt';
 import axios from 'axios';
@@ -80,6 +82,8 @@ function App() {
 
                 <Route path='/loginemployee' element={<EmployeeLogin/>}/>
                 <Route path='/employeedashboard' element={<EmployeeDashboard/>}/>
+                <Route path='/applyleave' element={<LeaveApply/>}/>
+
              </Routes>     
           </StatusContext.Provider>
           </UserContext.Provider>   

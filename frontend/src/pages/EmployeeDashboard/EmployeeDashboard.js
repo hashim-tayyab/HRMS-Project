@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import { decodeToken } from 'react-jwt';
 import './EmployeeDashboard.css';
+import SideNavBar from './Sidebar/Sidebar';
 
 function EmployeeDashboard() {
     const [employee, setEmployee] = useState([]);
@@ -33,7 +34,7 @@ function EmployeeDashboard() {
         const getCheckInTime = async () => {
           // console.log('CheckINTIME');
           const check_in = await axios.get(`http://localhost:4000/checkintime/${userId}/`)
-            if(check_in) {
+            if(check_in && check_in.data.checkInDate === date) {
             setCheckInTime(check_in.data.userCheckedInTime);
             }
             else{
@@ -43,7 +44,7 @@ function EmployeeDashboard() {
         const getCheckOutTime = async () => {
           // console.log('CHECKOUT')
           const check_out = await axios.get(`http://localhost:4000/checkouttime/${userId}/`)
-            if(check_out){
+            if(check_out && check_out.data.checkOutDate === date){
             setCheckOutTime(check_out.data.userCheckedOutTime); 
           }
           else{
@@ -89,9 +90,12 @@ function EmployeeDashboard() {
     } 
 
   return (
-    <div>
+    <div className='dashboard'>
         <h1>{employee.username} Dashboard</h1>
-        
+        {/* <div>
+        <SideNavBar/>
+        </div> */}
+
       <div className='checkin-box'>
         {!checkedIn ? (
           <button onClick={setTime}>Check In</button>
@@ -106,6 +110,10 @@ function EmployeeDashboard() {
         <br/>
         <div>Check In Time:  {checkInTime}</div>
         <div>Check Out Time:  {checkOutTime}</div>
+      </div>
+
+      <div className='leave'>
+
       </div>
 
 

@@ -4,6 +4,7 @@ const loginController = require('../controller/loginController/loginController')
 const employeeController = require('../controller/employeeController/employeeController');
 const paymentController = require('../controller/paymentController/paymentController');
 const attendanceController = require('../controller/attendanceController/attendanceController');
+const leaveController = require('../controller/leaveController/leaveController');
 const router = express.Router();
 const {MakePayment} = require('../utility/stripe/stripeConfig')
 
@@ -40,5 +41,11 @@ router.get('/checkouttime/:userId', attendanceController.getCheckOutTime);
 router.post('/makepayment', MakePayment);
 router.get('/paymentdetail/:userId', paymentController.getPaymentDetails);
 
+
+//Leave Routes
+router.post('/applyleave/:userId', leaveController.applyForLeave);
+router.get('/viewleave/:userId', leaveController.viewLeaveReq);
+router.get('/viewemployeeleaves/:userId', leaveController.viewLeaveApplied);
+router.post('/updaterequest/:userId', leaveController.updateLeaveStatus);
 
 module.exports = router;

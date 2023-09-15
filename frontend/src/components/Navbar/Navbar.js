@@ -7,6 +7,9 @@ import { useState, useEffect, useContext } from 'react';
 // import {Logout} from '../Logout/Logout';
 import { UserContext } from '../Context/userContext';
 import { useNavigate } from 'react-router-dom';
+import Dropdown from 'react-bootstrap/Dropdown';
+
+
 
 
 function MyNavbar() {
@@ -23,8 +26,6 @@ const {currentUser, setCurrentUser} = useContext(UserContext);
 useEffect(() => {
   if(currentUser){
     setIsLoggedIn(true);
-    // console.log(currentUser.username);
-
   }
 }, [currentUser, isLoggedIn, setIsLoggedIn, setCurrentUser, logout]);
 
@@ -38,8 +39,20 @@ useEffect(() => {
         {isLoggedIn? 
         (
         <Navbar.Text>
-            Signed in as: <a href='/'>{currentUser.username}</a>
-            <a onClick={logout}>Logout</a>
+            {/* Signed in as: <a href='/'>{currentUser.username}</a> */}
+      <div>
+        <Dropdown>
+          <Dropdown.Toggle  id="dropdown-basic">
+          {currentUser.username}
+          </Dropdown.Toggle>
+
+        <Dropdown.Menu>
+          <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
+          <Dropdown.Item href="/applyleave">Leave Apply</Dropdown.Item>
+          {/* <Dropdown.Item href="#/action-3">Something else</Dropdown.Item> */}
+          </Dropdown.Menu>
+        </Dropdown>
+      </div>
           </Navbar.Text>
           )
           :

@@ -72,6 +72,7 @@ class AttendanceService {
             const attendance = await Attendance.findOne(
                 {employee: req.params.userId},
                 {
+                    checkInDate: { $arrayElemAt: ['$attendance.date', position]},
                     userCheckedInTime: { $arrayElemAt: ['$attendance.check_in_time', position] },
                 },
                 ).lean();
@@ -95,6 +96,7 @@ class AttendanceService {
             const attendance = await Attendance.findOne(
                 {employee: req.params.userId},
                 {
+                    checkOutDate: { $arrayElemAt: ['$attendance.date', position]},
                     userCheckedOutTime: { $arrayElemAt: ['$attendance.check_out_time', position] },
                 },
                 ).lean();
