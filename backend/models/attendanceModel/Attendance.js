@@ -10,13 +10,13 @@ const attendanceSchema = new mongoose.Schema({
     [
        {
         date: { 
-            type: String,
+            type: Date,
         },
         check_in_time: {
-            type: String, 
+            type: Date, 
         },
         check_out_time: {
-            type: String 
+            type: Date 
         },
         }
     ]

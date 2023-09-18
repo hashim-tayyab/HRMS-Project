@@ -1,0 +1,25 @@
+.col{
+    border-right: solid 3px gainsboro;
+}
+
+.col-6{
+    border-right: solid 3px gainsboro;
+}
+
+.chatTextArea{
+    align-items: center;
+    display: flex;
+    margin-top: 5px;
+    justify-content: space-between;
+}
+
+.chatboxWrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.chatBoxTop{
+    height: 68vh;
+    overflow-y: scroll;
+}

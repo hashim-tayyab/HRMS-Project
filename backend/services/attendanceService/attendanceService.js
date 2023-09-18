@@ -107,5 +107,20 @@ class AttendanceService {
     }
 
 
+    async getAttendance(req, res) {
+        try {
+            const previousAttendance = await Attendance.findOne(
+                {employee: req.params.userId},
+                {
+                    prevAttendance: { $slice: ['$attendance', -5]} 
+                }                
+            )
+            return previousAttendance;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
 }
 module.exports = new AttendanceService();

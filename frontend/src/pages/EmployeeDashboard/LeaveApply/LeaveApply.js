@@ -23,7 +23,6 @@ function LeaveApply() {
             if (currentUser){
                 const getLeaveApplied = await axios.get(`http://localhost:4000/viewemployeeleaves/${currentUser._id}`);
             if(getLeaveApplied){
-                // console.log("getLeaveApplied", getLeaveApplied);
                 setLeaveApplied(getLeaveApplied.data);
             }
         }}

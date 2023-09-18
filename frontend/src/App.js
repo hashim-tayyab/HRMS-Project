@@ -14,8 +14,11 @@ import { StatusContext } from './components/Context/statusContext';
 import AddEmployees from './pages/ManageEmployees/AddEmployee';
 import Protected from './components/Protected/Protected';
 import EmployeeLogin from './components/Login/EmployeeLogin'
-import EmployeeDashboard from './pages/EmployeeDashboard/EmployeeDashboard';
+import EmployeeDashboard from './pages/EmployeeDashboard/EmpDashboard/EmployeeDashboard';
 import LeaveApply from './pages/EmployeeDashboard/LeaveApply/LeaveApply';
+import VerificationWait from './components/Signup/VerificationWait/VerificationWait';
+import ViewFellowEmployees from './pages/EmployeeDashboard/ViewFellowEmployees/ViewFellowEmployees';
+import Messenger from './pages/EmployeeDashboard/Messenger/Messenger';
 
 // import Logout from './components/Logout/Logout';
 import {decodeToken } from 'react-jwt';
@@ -60,7 +63,7 @@ function App() {
       else{
         return;
       };
-      }, [isLoggedIn, adminStatus]);
+      }, [isLoggedIn, adminStatus, setIsLoggedIn, setAdminStatus]);
 
     return (
       <div className="App">
@@ -70,6 +73,7 @@ function App() {
               <Routes>
                 <Route path='/' element={<HomePage/>}/>
                 <Route path='/signup' element={<SignupForm/>} />
+                <Route path='/verify-user' element={<VerificationWait/>}/>
                 <Route path='login' element={<LoginForm/>}/>
                 
                 
@@ -83,6 +87,8 @@ function App() {
                 <Route path='/loginemployee' element={<EmployeeLogin/>}/>
                 <Route path='/employeedashboard' element={<EmployeeDashboard/>}/>
                 <Route path='/applyleave' element={<LeaveApply/>}/>
+                <Route path='/fellowemployees' element={<ViewFellowEmployees/>}/>
+                <Route path='/messenger' element={<Messenger/>}/>
 
              </Routes>     
           </StatusContext.Provider>

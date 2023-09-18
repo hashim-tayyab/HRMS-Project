@@ -29,6 +29,9 @@ const adminSchema = new mongoose.Schema({
     isVerified:{
         type:Boolean,
         default:false
+    },
+    imageUrl:{
+        type:String,
     }
 
 });

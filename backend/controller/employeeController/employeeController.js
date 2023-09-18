@@ -1,4 +1,10 @@
-const {addEmployee, getEmployeesList, getMyAddedEmployees, loginAsEmployee, getEmployeeById} = require('../../services/employeeService/employeeService');
+const {
+    addEmployee, 
+    getEmployeesList, 
+    getMyAddedEmployees, 
+    loginAsEmployee, 
+    getEmployeeById,
+    getFellowEmployees} = require('../../services/employeeService/employeeService');
 const jwt = require('jsonwebtoken');
 
 class EmployeeController {
@@ -49,6 +55,17 @@ class EmployeeController {
             else{
                 console.log('User Failed');
                 return res.status(401).json({message: 'Invalid username or password'});
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async getFellowEmployees(req, res) {
+        try {
+            const employee = await getFellowEmployees(req);
+            if(employee) {
+                return res.status(200).json(employee);
             }
         } catch (error) {
             console.log(error);

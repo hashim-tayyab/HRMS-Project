@@ -1,31 +1,10 @@
-// import React, { useState } from 'react'
-
-// function AddEmployee() {
-//     const [username, setUsername] = useState('');
-//     const [password, setPassword] = useState('');
-//     const [email, setEmail] = useState('');
-//     const [companyName, setCompanyName] = useState('');
-//     const [phone, setPhone] = useState('');
-//     const [position, setPosition] = useState('');
-//     const [addedBy, setAddedBy] = useState('');
-
-//   return (
-//     <div>
-        
-//     </div>
-//   )
-// }
-
-// export default AddEmployee
-
-
-
 import React, { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import {Formik } from 'formik';
 // import { signupSchema } from './SignupSchema';
 import axios from 'axios';
-// import { PersistFormikValues } from 'formik-persist-values';
 import { UserContext } from '../../components/Context/userContext';
+// import cloudinary from 'cloudinary';
 
 
 
@@ -37,23 +16,50 @@ const initialValues={
   companyName: "",
   position: "",
   addedBy: "",
+  file: null,
 };
 
 
 function AddEmployee() {  
+
+
+
+
+    const navgiate = useNavigate();
     const {currentUser, setCurrentUser} = useContext(UserContext);
+    const [imgUrl, setImgUrl] = useState('');
     const [added, setAdded] = useState();
+
+    const handleImageSubmit = async (event) => {
+      const preset_key = process.env.REACT_APP_PRESETKEY;
+      const cloud_name = process.env.REACT_APP_CLOUDNAME;
+      
+      const file = event.target.files[0];
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', preset_key);
+      formData.append('cloud_name', cloud_name);
+      const instance = axios.create();
+      try {
+        await instance.post(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, formData) 
+        .then(response =>{
+          const url = response.data.secure_url;
+          setImgUrl(url);
+        })
+        .catch(err => console.log(err));
+      } catch (error) {
+        console.error(error);
+      }
+    }
 
     useEffect(() => {
         setAdded(currentUser.username)    
     }, [currentUser, setCurrentUser]);
 
-    // console.log(currentUser);
     return (
     <Formik
     initialValues= {initialValues}
     // validationSchema= {signupSchema}
-    
     
     onSubmit = { (values) =>{
       axios.post('http://localhost:4000/addemployee', {
@@ -65,11 +71,13 @@ function AddEmployee() {
         position: values.position,
         phone: values.phone,
         addedBy: added,
+        imageUrl: imgUrl,
     })
+    navgiate('/dashboard');
     }}>
 
     
-{({values, errors, touched, handleBlur, handleChange, handleSubmit}) => (
+{({values, errors, touched, handleBlur, handleChange, handleSubmit, setFieldValue}) => (
      <form onSubmit={handleSubmit}>
      <div className='name-block'>
           <label htmlFor="username">Name</label>
@@ -163,6 +171,17 @@ function AddEmployee() {
                />
             {errors.confirm_password && touched.confirm_password ?
             (<p className='form-error'>{errors.confirm_password}</p>):null}
+        </div>
+
+
+        <div className='image-block'>
+          <label htmlFor='file'>Upload Image</label>
+          <br />
+          <input type='file'
+              name='file'
+              onChange={handleImageSubmit}
+              onBlur={handleBlur}
+               />
         </div>
 
         <div>

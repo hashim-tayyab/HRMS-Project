@@ -1,4 +1,8 @@
-const {getAllUsers, registerUser, verifyMail} = require('../../services/registerService/registerUser');
+const {
+    getAllUsers, 
+    registerUser, 
+    verifyMail, 
+    checkIsVerified } = require('../../services/registerService/registerUser');
 // const User = require('../../models/adminModel/Admin');
 
 class UserController {
@@ -14,7 +18,13 @@ class UserController {
 
     async verifyMail(req, res){
         const user = await verifyMail(req);
-        return res.status(201).json(user);
+        return res.render('thank-you');
+        // return res.status(201).json(user).render('thank-you');
+    }
+
+    async checkIsVerified(req ,res) {
+        const isVerified = await checkIsVerified(req);
+        return res.status(200).json(isVerified);
     }
 }
 

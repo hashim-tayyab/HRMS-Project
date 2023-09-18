@@ -1,10 +1,6 @@
 import './Navbar.css';
-import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
-// import axios from 'axios';
 import { useState, useEffect, useContext } from 'react';
-// import {decodeToken} from 'react-jwt';
-// import {Logout} from '../Logout/Logout';
 import { UserContext } from '../Context/userContext';
 import { useNavigate } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -31,25 +27,48 @@ useEffect(() => {
 
 
   return (
-    <Navbar className="bg-body-tertiary">
-      <Container className='navContainer'>
+    <Navbar>
         <Navbar.Brand href="#home">Welcome to HRMS</Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
         {isLoggedIn? 
         (
         <Navbar.Text>
-            {/* Signed in as: <a href='/'>{currentUser.username}</a> */}
       <div>
-        <Dropdown>
+         <Dropdown
+          align={{ lg: 'end' }}>
           <Dropdown.Toggle  id="dropdown-basic">
           {currentUser.username}
+          <Navbar.Brand href="#home">
+            {currentUser.imageUrl? (
+              <>
+            <img
+              src= {currentUser.imageUrl}
+              width="30"
+              height="30"
+              className="d-inline-block align-top"
+            />
+            </>
+            ):(
+            <>
+              <img src= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZTQ3UJipAxvQpwl7MffTRf5Ia0InpL_IZZw&usqp=CAU"
+              width="30"
+              height="30"
+            />
+            </>
+              )
+            }
+          </Navbar.Brand>
           </Dropdown.Toggle>
 
         <Dropdown.Menu>
           <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
           <Dropdown.Item href="/applyleave">Leave Apply</Dropdown.Item>
-          {/* <Dropdown.Item href="#/action-3">Something else</Dropdown.Item> */}
+
+
+          <Dropdown.Item href='/fellowemployees'>View Employees</Dropdown.Item>
+
+
           </Dropdown.Menu>
         </Dropdown>
       </div>
@@ -58,12 +77,11 @@ useEffect(() => {
           :
           (
           <Navbar.Text>
-            <a href="/login">Login</a>
+            <a href="/">Login</a>
           </Navbar.Text>
           )
         }
         </Navbar.Collapse>
-      </Container>
     </Navbar>
   );
 }

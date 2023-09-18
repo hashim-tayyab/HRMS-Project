@@ -3,6 +3,7 @@ const app = express();
 const cors = require("cors");
 const routes = require("./routes/routes");
 const bodyParser = require("body-parser");
+const path = require('path');
 
 
 // const passport = require('passport');
@@ -19,6 +20,9 @@ app.use(express.urlencoded({extended:true}));
 app.use(routes);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
+
+app.set('view engine', 'ejs');
+// app.set('views', path.join(__dirname, 'views'));
 // require("./sendgrid/sendgrid");
 
 connectMongoose();

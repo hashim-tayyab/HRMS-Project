@@ -1,7 +1,9 @@
 const Admin = require('../../models/adminModel/Admin');
+const User = require('../../models/userModel/userModel')
 const crypto = require('crypto');
 const sgMail = require('@sendgrid/mail');
 require('dotenv').config();
+const jwt = require('jsonwebtoken');
 const apikey = process.env.SENDGRID_API_KEY;
 sgMail.setApiKey(apikey);
 
@@ -20,15 +22,20 @@ class UserService {
     async registerUser(req) {
         const {username, email, password, phone, gender} = req.body;
         const token = crypto.randomBytes(64).toString("hex");
-        const newUser = new Admin({
-        username: username,
-        email: email,
-        password: password,
-        phone:phone,
-        token:token,
-        gender: gender,
-        isVerified:false     
-    });        
+        const newAdmin = new Admin({
+            username: username,
+            email: email,
+            password: password,
+            phone:phone,
+            token:token,
+            gender: gender,
+            isVerified:false     
+        });   
+        const newUser = new User({
+            email: email,
+            password: password,
+            isAdmin: true,
+        });
         const message = {
         to: "hashimtayyab01@gmail.com",
         from: {
@@ -44,8 +51,20 @@ class UserService {
             sgMail.send(message)
             .then(() => console.log("Email sent successfully"))
             .catch((err) => console.log(err));
-            const user = await newUser.save().then(() => console.log("Admin Added"));
-            return user;
+            const admin = await newAdmin.save().then(() => console.log("Admin Added"));
+            await newUser.save();
+            return admin;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async checkIsVerified(req) {
+        try {
+            const findUser = await Admin.findOne({
+                email: req.params.email,
+            });
+            return findUser;
         } catch (error) {
             console.log(error);
         }
@@ -54,18 +73,15 @@ class UserService {
 
     async verifyMail(req, res){
         try {
-            console.log(req.query.token);
+            // console.log(req.query.token);
             const findUser = await Admin.findOne({
                 token: req.query.token,
             });
                 findUser.token = null;
                 findUser.isVerified = true;
-                console.log(findUser.email);
                 await findUser.save();
-                return res.json({
-                    message: "Email verified"
-                })
-            // }
+                // return { message: "Email verified"}
+                
         } catch (error) {
             console.log(error);
         }

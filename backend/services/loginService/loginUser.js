@@ -48,6 +48,7 @@ class LoginUserService {
 
     async getUserById(req) {
         try {
+            // const user = await Admin.findOne({
             const user = await Admin.findOne({
             _id: req.params.userId,
             });

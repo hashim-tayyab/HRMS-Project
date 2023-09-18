@@ -1,0 +1,48 @@
+/* Apply these styles to all input elements */
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  /* Style for focused input fields */
+  input:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  /* Style for disabled input fields */
+  input:disabled {
+    background-color: #f7f7f7;
+    cursor: not-allowed;
+  }
+  
+  /* Style for error or invalid input fields */
+  input.error {
+    border-color: #ff0000;
+    color: #ff0000;
+  }
+  
+  /* Placeholder text color */
+  input::placeholder {
+    color: #999;
+  }
+  
+  /* Button styling */
+  /* button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  } */
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  

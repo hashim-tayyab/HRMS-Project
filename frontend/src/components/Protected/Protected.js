@@ -9,13 +9,13 @@ const Protected = ({ isLoggedIn, children }) => {
     const {adminStatus, setAdminStatus} = useContext(StatusContext)
 
   useEffect(() => {
-    console.log("adminStatus", adminStatus);
+    // console.log("adminStatus", adminStatus);
       isLoggedIn = true;
       if (!adminStatus) {
         navigate('/');
           //  <Navigate to="/" replace />;
         }
-  }, [adminStatus, setAdminStatus]);
+  }, [adminStatus, setAdminStatus, currentUser, setCurrentUser]);
 
     return children;
   };

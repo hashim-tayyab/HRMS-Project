@@ -28,6 +28,9 @@ const employeeSchema = new mongoose.Schema({
     position:{
         type:String,
         required:true
+    },
+    imageUrl:{
+        type:String,
     }
 
 });

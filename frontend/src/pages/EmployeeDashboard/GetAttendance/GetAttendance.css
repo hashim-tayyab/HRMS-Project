@@ -1,0 +1,12 @@
+.tb.table{
+    font-size: x-small;
+    /* padding: 1px; */
+    margin-bottom: 0px;
+}
+table tbody tr td{
+    padding: 0.2rem;
+}
+div.attCard.card{
+   width: 20rem;
+   /* height: 20rem; */
+}

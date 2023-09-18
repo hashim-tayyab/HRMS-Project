@@ -1,4 +1,5 @@
 const Employee = require('../../models/employeeModel/Employee');
+const User = require('../../models/userModel/userModel')
 const jwt = require('jsonwebtoken');
 
 class EmployeeService {
@@ -35,7 +36,7 @@ class EmployeeService {
     }
 
     async addEmployee(req) {
-        const {username, email, password, phone, addedBy, companyName, position} = req.body;
+        const {username, email, password, phone, addedBy, companyName, position, imageUrl} = req.body;
         const newEmployee = new Employee({
         username: username,
         email: email,
@@ -44,9 +45,16 @@ class EmployeeService {
         addedBy:addedBy,
         companyName: companyName,
         position: position,
-    });        
+        imageUrl: imageUrl,
+    });  
+        const newUser = new User({
+            email: email,
+            password: password,
+            isAdmin: false,
+        })
         try {
             const employee = await newEmployee.save().then(() => console.log("Employee Added Successfully"));
+            await newUser.save();
             return employee;
         } catch (error) {
             console.log(error);
@@ -72,6 +80,19 @@ class EmployeeService {
                 return false;
             }
 
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
+
+    async getFellowEmployees(req, res) {
+        try {
+            const employeeList = await Employee.find(
+                {companyName: req.params.company},
+            );
+            return employeeList;
         } catch (error) {
             console.log(error);
         }

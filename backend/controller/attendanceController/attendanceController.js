@@ -1,4 +1,9 @@
-const {addCheckInTime, addCheckOutTime, getCheckInTime, getCheckOutTime} = require('../../services/attendanceService/attendanceService');
+const {
+    addCheckInTime, 
+    addCheckOutTime, 
+    getCheckInTime, 
+    getCheckOutTime,
+    getAttendance } = require('../../services/attendanceService/attendanceService');
 
 class AttendanceController {
     async addCheckInTime(req, res) {
@@ -32,10 +37,18 @@ class AttendanceController {
     async getCheckOutTime(req, res) {
         try {
             const checkout = await getCheckOutTime(req);
-            // console.log("checkin", checkin);
             return res.status(200).json(checkout);   
         } catch (error) {
             console.error(error);
+        }
+    }
+
+    async getAttendance(req, res) {
+        try {
+            const atten = await getAttendance(req);
+            res.status(200).json(atten);
+        } catch (error) {
+            console.log(error);
         }
     }
 }

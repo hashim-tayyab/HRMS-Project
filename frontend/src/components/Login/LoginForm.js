@@ -4,7 +4,10 @@ import { loginSchema } from './LoginSchema';
 import { useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import { UserContext } from '../Context/userContext';
+import { StatusContext } from '../Context/statusContext';
+
 import { decodeToken } from 'react-jwt';
+import './LoginForm.css'
 // import { PaymentContext } from '../Context/paymentContext';
 
 const initialValues={
@@ -13,7 +16,8 @@ const initialValues={
 };
 
 function LoginForm() {  
-const {currentUser, setCurrentUser} = useContext(UserContext)
+const {currentUser, setCurrentUser} = useContext(UserContext);
+const {adminStatus, setAdminStatus} = useContext(StatusContext);
 
 useEffect(() => {
   // console.log(currentUser);
@@ -37,20 +41,21 @@ useEffect(() => {
         password: values.password,
       });
         if(res.status == 200){
-          console.log("res", res);
+          // console.log("res", res);
            await setCurrentUser(res.data);
           localStorage.setItem('token', res.data.token);
-          console.log("tokenDetails", decodeToken(res.data.token));
+          // console.log("tokenDetails", decodeToken(res.data.token));
           const isAdmin = decodeToken(res.data.token).isAdmin;
-          console.log("isAdmin", isAdmin);
-            if(isAdmin){
-            navigate("/dashboard");
-            // refresh();
-          }
-          else{
-            navigate("/employeedashboard");
-            // refresh();
-          }  
+          setAdminStatus(isAdmin);
+          // console.log("isAdmin", isAdmin);
+        //     if(isAdmin){
+        //     navigate("/dashboard");
+        //     // refresh();
+        //   }
+        //   else{
+        //     navigate("/employeedashboard");
+        //     // refresh();
+        //   }  
         }
         else {
           navigate("/login");
@@ -87,9 +92,8 @@ useEffect(() => {
               />
             {errors.password && touched.password ? (<p className='form-error'>{errors.password}</p>):null}
       </div>
-        <div>
-            <br />
-          <button type='submit'>Login</button>
+        <div className='btnDiv'>
+            <button type='submit'>Login</button>
       </div>
      </form>
     )}
