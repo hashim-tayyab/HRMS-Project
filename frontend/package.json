@@ -9,6 +9,8 @@
     "axios": "^1.5.0",
     "bootstrap": "^5.3.1",
     "buffer": "^6.0.3",
+    "cdbreact": "^1.5.18",
+    "chart.js": "^4.4.0",
     "cloudinary": "^1.40.0",
     "cloudinary-core": "^2.13.0",
     "crypto": "^1.0.1",
@@ -21,11 +23,14 @@
     "react": "^18.2.0",
     "react-bootstrap": "^2.8.0",
     "react-bootstrap-sidebar-menu": "^2.0.3",
+    "react-chartjs-2": "^5.2.0",
     "react-datepicker": "^4.17.0",
     "react-dom": "^18.2.0",
     "react-jwt": "^1.2.0",
+    "react-pro-sidebar": "^1.1.0-alpha.1",
     "react-router-dom": "^6.15.0",
     "react-scripts": "^5.0.1",
+    "socket.io-client": "^4.7.2",
     "yup": "^1.2.0"
   },
   "scripts": {

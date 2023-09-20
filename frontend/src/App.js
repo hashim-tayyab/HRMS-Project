@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {Routes, Route} from "react-router";
+import {  useLocation } from 'react-router-dom';
 import SignupForm from "./components/Signup/SignupForm";
 import LoginForm from './components/Login/LoginForm';
 import HomePage from './pages/Home/HomePage';
@@ -19,17 +20,22 @@ import LeaveApply from './pages/EmployeeDashboard/LeaveApply/LeaveApply';
 import VerificationWait from './components/Signup/VerificationWait/VerificationWait';
 import ViewFellowEmployees from './pages/EmployeeDashboard/ViewFellowEmployees/ViewFellowEmployees';
 import Messenger from './pages/EmployeeDashboard/Messenger/Messenger';
-
-// import Logout from './components/Logout/Logout';
+import LeaveRequests from './pages/Dashboard/LeaveRequests/LeaveRequests';
 import {decodeToken } from 'react-jwt';
 import axios from 'axios';
 
+
+
+import SideNavBar from './pages/EmployeeDashboard/Sidebar/Sidebar';
 function App() {
 
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(null);
   const [decodedToken, setDecodedToken] = useState(null);
   const [adminStatus, setAdminStatus] = useState(false);
+  const location = useLocation();
+  const isLoginPage = location.pathname === '/';
+
 
   useEffect(() =>{
       const token = localStorage.getItem('token');
@@ -69,12 +75,12 @@ function App() {
       <div className="App">
           <UserContext.Provider value={{currentUser, setCurrentUser}}>
             <StatusContext.Provider value={{adminStatus, setAdminStatus}}>
-              <MyNavbar/>          
+              {isLoginPage ? null : <MyNavbar />}
               <Routes>
                 <Route path='/' element={<HomePage/>}/>
                 <Route path='/signup' element={<SignupForm/>} />
                 <Route path='/verify-user' element={<VerificationWait/>}/>
-                <Route path='login' element={<LoginForm/>}/>
+                <Route path='/login' element={<LoginForm/>}/>
                 
                 
                 <Route path='/payment' element={<Protected isLoggedIn={false}><PaymentPage/></Protected>}/>  
@@ -82,6 +88,8 @@ function App() {
                 <Route path='/addemployee' element={<Protected isLoggedIn={false}><AddEmployees/></Protected>}/>  
                 <Route path='/getemployees' element={<Protected isLoggedIn={false}><GetEmployees/></Protected>}/>  
                 <Route path='/dashboard' element={<Protected isLoggedIn={false}><Dashboard/></Protected>}/>
+                <Route path='/leaverequests' element={<Protected isLoggedIn={false}><LeaveRequests/></Protected>}/>
+
 
 
                 <Route path='/loginemployee' element={<EmployeeLogin/>}/>

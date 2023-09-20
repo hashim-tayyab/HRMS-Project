@@ -27,8 +27,8 @@ useEffect(() => {
 
 
   return (
-    <Navbar>
-        <Navbar.Brand href="#home">Welcome to HRMS</Navbar.Brand>
+    <Navbar style={{height: "55px"}}>
+        <Navbar.Brand href="/">Welcome to HRMS</Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
         {isLoggedIn? 
@@ -37,21 +37,23 @@ useEffect(() => {
       <div>
          <Dropdown
           align={{ lg: 'end' }}>
-          <Dropdown.Toggle  id="dropdown-basic">
-          {currentUser.username}
+          <Dropdown.Toggle style={{backgroundColor:'gainsboro', border:'none', color:'black'}} id="dropdown-basic">
+          {currentUser.username} &nbsp;
           <Navbar.Brand href="#home">
             {currentUser.imageUrl? (
-              <>
-            <img
+              <div className='imgg'>
+            <img 
+              style={{borderRadius: '50%'}} 
               src= {currentUser.imageUrl}
               width="30"
               height="30"
               className="d-inline-block align-top"
+              
             />
-            </>
+            </div>
             ):(
             <>
-              <img src= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZTQ3UJipAxvQpwl7MffTRf5Ia0InpL_IZZw&usqp=CAU"
+              <img style={{borderRadius: '50%'}} src= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZTQ3UJipAxvQpwl7MffTRf5Ia0InpL_IZZw&usqp=CAU"
               width="30"
               height="30"
             />
@@ -62,11 +64,14 @@ useEffect(() => {
           </Dropdown.Toggle>
 
         <Dropdown.Menu>
+        <Dropdown.Item href="/">Home</Dropdown.Item>
+
           <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
-          <Dropdown.Item href="/applyleave">Leave Apply</Dropdown.Item>
+
+          {/* <Dropdown.Item href="/applyleave">Leave Apply</Dropdown.Item> */}
 
 
-          <Dropdown.Item href='/fellowemployees'>View Employees</Dropdown.Item>
+          {/* <Dropdown.Item href='/fellowemployees'>View Employees</Dropdown.Item> */}
 
 
           </Dropdown.Menu>

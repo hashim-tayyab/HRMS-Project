@@ -2,7 +2,8 @@ const {
     applyForLeave, 
     viewLeaveReq, 
     updateLeaveStatus, 
-    viewLeaveApplied } = require("../../services/leaveService/leaveService");
+    viewLeaveApplied,
+    getAdmins } = require("../../services/leaveService/leaveService");
 
 class LeaveController {
 
@@ -18,7 +19,7 @@ class LeaveController {
 
     async viewLeaveReq(req, res) {
         try {
-            const viewLeave = viewLeaveReq(req, res);
+            const viewLeave = await viewLeaveReq(req, res);
             res.status(200).json(viewLeave);
         } catch (error) {
             console.log(error);
@@ -42,6 +43,15 @@ class LeaveController {
             res.status(200).json(update);
         } catch (error) {
             console.log(error);
+        }
+    }
+
+    async getAdmins(req, res){
+        try {
+            const adminList = await getAdmins(req, res);
+            res.status(200).json(adminList);
+        } catch (error) {
+            console.log(error);   
         }
     }
 }

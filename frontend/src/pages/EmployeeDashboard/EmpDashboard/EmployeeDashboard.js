@@ -8,7 +8,8 @@ import GetAttendance from "../GetAttendance/GetAttendance";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-// import SideNavBar from './Sidebar/Sidebar';
+import Graph from "../../../components/Graphs/Graphs";
+import SideNavBar from '../Sidebar/Sidebar';
 
 function EmployeeDashboard() {
   function formatDate(date) {
@@ -71,10 +72,8 @@ function EmployeeDashboard() {
       const check_out = await axios.get(
         `http://localhost:4000/checkouttime/${userId}/`
       );
-      if (
-        check_out &&
-        formatDate(check_out.data.checkOutDate) === formatDate(today)
-      ) {
+      // console.log("Check Out", check_out);
+      if (check_out.data.userCheckedOutTime && formatDate(check_out.data.checkOutDate) === formatDate(today)) {
         setCheckOutTime(formatTime(check_out.data.userCheckedOutTime));
       } else {
         setCheckOutTime("...");
@@ -126,9 +125,11 @@ function EmployeeDashboard() {
 
   return (
     <>
-      <h1>{employee.username} Dashboard</h1>
-
+      {/* <h1>{employee.username} Dashboard</h1> */}
       <div className="dashboard">
+        <div style={{marginTop:'-20px', height: '91vh'}}>
+        <SideNavBar />
+        </div>
         <Container>
           <Row>
             <Col>
@@ -145,7 +146,6 @@ function EmployeeDashboard() {
                   )}
                   <Card.Subtitle>Date: {todayDate}</Card.Subtitle>
                   <Card.Text>Check In Time: {checkInTime}<br/>Check Out Time: {checkOutTime}</Card.Text>
-                  {/* <Card.Text>Check Out Time: {checkOutTime}</Card.Text> */}
                 </Card.Body>
               </Card>
             </Col>
@@ -153,7 +153,9 @@ function EmployeeDashboard() {
             <Col>
               <GetAttendance />
             </Col>
-            <Col></Col>
+            <Col>
+            <Graph/>
+            </Col>
           </Row>
         </Container>
       </div>

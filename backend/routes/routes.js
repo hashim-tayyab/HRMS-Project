@@ -52,6 +52,7 @@ router.post('/applyleave/:userId', leaveController.applyForLeave);
 router.get('/viewleave/:userId', leaveController.viewLeaveReq);
 router.get('/viewemployeeleaves/:userId', leaveController.viewLeaveApplied);
 router.post('/updaterequest/:userId', leaveController.updateLeaveStatus);
+router.get('/adminlist', leaveController.getAdmins);
 
 
 

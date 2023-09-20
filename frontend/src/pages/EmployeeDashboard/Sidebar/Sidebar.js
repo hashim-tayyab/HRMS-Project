@@ -1,50 +1,41 @@
-import React from "react";
-import "@trendmicro/react-sidenav/dist/react-sidenav.css";
+import React from 'react';
+import {Link} from 'react-router-dom'
+import {
+  CDBSidebar,
+  CDBSidebarContent,
+  CDBSidebarHeader,
+  CDBSidebarMenu,
+  CDBSidebarMenuItem,
+  CDBSidebarFooter,
+} from 'cdbreact';
+import './Sidebar.css'
 
-import SideNav, {
-  Toggle,
-  Nav,
-  NavItem,
-  NavIcon,
-  NavText
-} from "@trendmicro/react-sidenav";
+const SideNavBar = () => {
+  return (
+      <CDBSidebar textColor="#333" backgroundColor="#f0f0f0">
+        <CDBSidebarHeader prefix={<i className="fa fa-bars" />}>
+          Quick Access
+        </CDBSidebarHeader>
+        <CDBSidebarContent>
+          <CDBSidebarMenu>
+          <Link to="/applyleave" relative="path">
+            <CDBSidebarMenuItem className='sideMenu' icon="th-large"><div className='menuItem'>Apply For Leave</div></CDBSidebarMenuItem>
+            </Link>
+            <Link to="/fellowemployees" relative="path">
+            <CDBSidebarMenuItem className='sideMenu' icon="sticky-note"><div className='menuItem'>View Employees</div></CDBSidebarMenuItem>
+            </Link>
+          </CDBSidebarMenu>
+        </CDBSidebarContent>
 
-class SideNavBar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isVisible: true
-    };
-  }
-
-  render() {
-    return (
-      <SideNav expanded={this.state.isVisible}>
-        <SideNav.Toggle
-          onClick={() => {
-            this.setState({ isVisible: !this.state.isVisible });
-          }}
-        />
-        <SideNav.Nav defaultSelected="home">
-          <NavItem eventKey="home">
-            <NavIcon>
-              <i className="fa fa-fw fa-home" style={{ fontSize: "1.75em" }} />
-            </NavIcon>
-            <NavText>Home</NavText>
-          </NavItem>
-          <NavItem eventKey="placed orders">
-            <NavIcon>
-              <i
-                className="fa fa-fw fa-line-chart"
-                style={{ fontSize: "1.75em" }}
-              />
-            </NavIcon>
-            <NavText>placed orders</NavText>
-          </NavItem>
-        </SideNav.Nav>
-      </SideNav>
-    );
-  }
-}
+        <CDBSidebarFooter style={{ textAlign: 'center' }}>
+          <div
+            className="sidebar-btn-wrapper"
+            style={{padding: '20px 5px'}}
+          >
+          </div>
+        </CDBSidebarFooter>
+      </CDBSidebar>
+  );
+};
 
 export default SideNavBar;

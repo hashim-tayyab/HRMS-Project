@@ -30,3 +30,16 @@ body, html {
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     border-radius: 10px;
 }
+
+
+.login_page{
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* size : 100vh; */
+    background-image: url('https://img.freepik.com/premium-vector/white-elegant-blue-background_662550-436.jpg?w=1060');
+}
+
+/* nav{
+    display: none;
+} */

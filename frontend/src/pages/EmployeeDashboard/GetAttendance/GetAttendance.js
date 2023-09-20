@@ -21,35 +21,43 @@ function GetAttendance() {
   }
 
   function formatTime(time){
-    var time = new Date(time);
-    var fullTime = time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds();
-    return fullTime;
+    if(time !==null){
+      var time = new Date(time);
+      var fullTime = time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds();
+      return fullTime;
+    }
+    else return '...'
   }
   function timeSpent(outTime, inTime){
     var inT = new Date(inTime);
     var outT = new Date(outTime);
     var time =  new Date(outT - inT);
-    return time.getHours()-5+":"+time.getMinutes()+":"+time.getSeconds();
+    if(outTime !== null){  
+      return time.getHours()-5+":"+time.getMinutes()+":"+time.getSeconds();
+    }
+    else{
+      return '...';
+    }
   }
 
 
     useEffect(() => {
       const getAttendance = async () => {
         if(currentUser && !adminStatus){
-
-          const r = await axios.get(`http://localhost:4000/attendance/${currentUser._id}`)
-          .then((res) => {setAttendance(res.data.prevAttendance)
-          console.log(isLoaded);
-          })
-          
-          .finally(() => {setIsLoaded(true)});
+          const r = await axios.get(`http://localhost:4000/attendance/${currentUser._id}`);
+          if(r.data !== null && r.data !== ""){
+            setAttendance(r.data.prevAttendance);
+            setIsLoaded(true);
+          }
         }
       }
       getAttendance();
-    }, [currentUser, adminStatus]);
+    }, [currentUser]);
+
+
   return (
     <div>
-       {isLoaded?(
+       
         <Card className='attCard' style={{backgroundColor:'gainsboro'}}>
             <Card.Body>
               <Table className='tb' style={{padding: '0.2rem'}}>
@@ -61,6 +69,7 @@ function GetAttendance() {
                     <th>DURATION</th>
                   </tr>
                 </thead>
+                {isLoaded?(
                   <tbody>
                 {attendance.map((att) => 
                   <tr key={att._id}>
@@ -70,16 +79,21 @@ function GetAttendance() {
                     <td>{timeSpent(att.check_out_time, att.check_in_time)}</td>
                   </tr>
                   )}
-                </tbody>            
+                </tbody>  
+                ):(
+                  <tbody>
+                    <tr>
+                    <td style={{width:'90px'}}></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  </tbody>
+                )  
+                }        
               </Table>
             </Card.Body>
           </Card>
-      ):(       
-    <>
-      Loading...
-    </>
-    ) 
-    }
     </div>
   )
 }

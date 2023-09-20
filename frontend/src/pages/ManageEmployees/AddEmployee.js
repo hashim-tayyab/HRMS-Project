@@ -4,7 +4,8 @@ import {Formik } from 'formik';
 // import { signupSchema } from './SignupSchema';
 import axios from 'axios';
 import { UserContext } from '../../components/Context/userContext';
-// import cloudinary from 'cloudinary';
+import './AddEmployee.css'
+import Button from 'react-bootstrap/Button'
 
 
 
@@ -78,7 +79,8 @@ function AddEmployee() {
 
     
 {({values, errors, touched, handleBlur, handleChange, handleSubmit, setFieldValue}) => (
-     <form onSubmit={handleSubmit}>
+     <form className='addEmpForm' onSubmit={handleSubmit}>
+      <div>
      <div className='name-block'>
           <label htmlFor="username">Name</label>
           <br />
@@ -124,7 +126,6 @@ function AddEmployee() {
       </div>
 
 
-
       <div className='confirm-block'>
           <label htmlFor='companyName'>Company Name</label>
           <br />
@@ -141,6 +142,10 @@ function AddEmployee() {
             (<p className='form-error'>{errors.confirm_password}</p>):null}
         </div>
 
+        </div>
+
+
+<div>
         <div className='confirm-block'>
           <label htmlFor='position'>Position</label>
           <br />
@@ -177,7 +182,7 @@ function AddEmployee() {
         <div className='image-block'>
           <label htmlFor='file'>Upload Image</label>
           <br />
-          <input type='file'
+          <input className='choose-file' type='file'
               name='file'
               onChange={handleImageSubmit}
               onBlur={handleBlur}
@@ -186,9 +191,11 @@ function AddEmployee() {
 
         <div>
             <br />
-          <button type='submit'>Register</button>
+          <Button variant='outline-primary' type='submit'>Add Employee</Button>
       </div>
-      {/* <PersistFormikValues name="signup-form" /> */}
+
+
+      </div>
      </form>
     )}
     </Formik>

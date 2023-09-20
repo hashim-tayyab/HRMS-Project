@@ -4,6 +4,7 @@ const cors = require("cors");
 const routes = require("./routes/routes");
 const bodyParser = require("body-parser");
 const path = require('path');
+const { getEmployees } = require('./utility/cronjob/cron');
 
 
 // const passport = require('passport');
@@ -22,8 +23,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
 app.set('view engine', 'ejs');
-// app.set('views', path.join(__dirname, 'views'));
-// require("./sendgrid/sendgrid");
+
+const cron = require('node-cron');
+cron.schedule('0 21 17 * * *', getEmployees);
+// getEmployees();
 
 connectMongoose();
 app.listen(process.env.PORT || 4000, () => {

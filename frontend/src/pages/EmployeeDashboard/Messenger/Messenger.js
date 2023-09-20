@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import  Container  from 'react-bootstrap/Container';
 import  Row  from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -6,20 +6,61 @@ import Conversation from './Conversation/Conversation';
 import Message from './Message/Message';
 import './Messenger.css';
 import axios from 'axios';
-import {UserContext} from '../../../components/Context/userContext'
+import {UserContext} from '../../../components/Context/userContext';
+import {io} from 'socket.io-client';
+import { sendArrow } from '../../../assets/assets';
 
 function Messenger() {
-    const {currentUser, setCurrentUser} = useContext(UserContext);
     const [conversation, setConversation] = useState([]);
     const [currentChat, setCurrentChat] = useState(null);
     const [messages, setMessages] = useState([]);
     const [newMessages, setNewMessages] = useState([]);
+    const [arrivalMessage, setArrivalMessage] = useState(null);
+    const socket = useRef();
+    const scrollRef = useRef();
+    const {currentUser, setCurrentUser} = useContext(UserContext);
+
+
+    useEffect(() => {
+        socket.current = io("ws://localhost:8900");
+        socket.current.on("getMessage", data =>{
+            setArrivalMessage({
+                sender: data.senderId,
+                text: data.text,
+                createdAt: Date.now(),
+            })
+        })
+    },[]);
+
+    useEffect(() => {
+        arrivalMessage && currentChat.members.includes(arrivalMessage.sender) &&
+        setMessages((prev) => [...prev, arrivalMessage])
+    },[arrivalMessage, currentChat]);
+
+
+    useEffect(() => {
+        if(currentUser?._id !== null){
+        socket.current.emit("addUser", currentUser?._id);
+        socket.current.on("getUsers",users => {
+            console.log(users);
+        })
+    }
+    },[currentUser]);
+
+
+    useEffect(() =>{
+        scrollRef.current?.scrollIntoView({behavior: "smooth"});
+    },[messages]);
+
+
+
+
+
     useEffect(() => {
         const getConversation = async () => {
             try {
                 if (currentUser){
-                const con = await axios.get(`http://localhost:4000/conversation/${currentUser._id}`);
-                // console.log("con.data", con.data);
+                const con = await axios.get(`http://localhost:4000/conversation/${currentUser?._id}`);
                 setConversation(con.data)}
             } catch (error) {
                 console.log(error);
@@ -32,9 +73,7 @@ function Messenger() {
         const getMessages = async () => {
             try {
                 if(currentChat){
-                    // console.log(currentChat);
-                    const res = await axios.get(`http://localhost:4000/getmessage/${currentChat._id}`);
-                    // console.log("getting messages: ",res.data)
+                    const res = await axios.get(`http://localhost:4000/getmessage/${currentChat?._id}`);
                     setMessages(res.data);
                 }    
             } catch (error) {
@@ -51,9 +90,16 @@ function Messenger() {
             text :newMessages,
             conversationId: currentChat._id,
         }
+        const receiverId = currentChat.members.find(member => member !== currentUser._id);
+        socket.current.emit("sendMessage", {
+            senderId :currentUser._id,
+            receiverId,
+            text: newMessages
+        });
         try {
             const sendMessage = await axios.post(`http://localhost:4000/sendmessage`, message);
             setMessages([...messages, sendMessage.data]);
+            setNewMessages("");
         } catch (error) {
             console.log(error);
         }
@@ -65,7 +111,7 @@ function Messenger() {
         <Container>
             <Row>
                 {conversation? (
-                <Col>
+                <Col className='converse-col'>
                 {
                 conversation.map((c) =>(
                     <div key={c._id} onClick={() => setCurrentChat(c)}>
@@ -76,19 +122,21 @@ function Messenger() {
                     <Col></Col>
                 )
                 }
-                <Col xs={6}>
+                <Col className='chat-col' xs={6}>
                     {currentChat?(
                     <div className='chatboxWrapper'>
                         <div className='chatBoxTop'>
                         {messages.map((m) => (
-                            <Message key={m._id} message={m} own = {m.sender === currentUser._id}/>
+                            <div key={m._id} ref={scrollRef}>
+                            <Message message={m} own = {m.sender === currentUser._id}/>
+                            </div>
                         ))}
 
                         </div>
-                        <div className='chatTextArea'>
+                        <div className='textarea-container'>
                                 <textarea onChange = {(e) => setNewMessages(e.target.value)} 
-                                className='writeMessage' placeholder='...'></textarea>
-                                <button onClick={handleSubmit}>Send</button>
+                                className='writeMessage' placeholder='Write something..'></textarea>
+                                <span className="send-button" onClick={handleSubmit}>{sendArrow}</span>
                             </div>
                     </div>):(<>Open a conversation</>)
                     }

@@ -1,0 +1,15 @@
+p{
+    font-size: 25px;
+}
+span{
+    font-size: 25px;
+    padding-top: 20px;
+}
+.leavecards.card{
+    margin-top: 30px;
+    margin-left: 100px;
+    padding: 20px;
+    background-color: gainsboro;
+    align-items: center;
+    display: flex;
+}

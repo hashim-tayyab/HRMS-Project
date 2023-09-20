@@ -17,12 +17,12 @@ function GetEmployees() {
     getUsers();
 },[]);
 return(
-    <>
+    <div className='empList'>
 
     {employees.map(employee => 
         {
        return (
-       <Card style={{ width: '18rem' }} key={employee._id}>
+       <Card  style={{ width: '18rem' }} key={employee._id}>
         <Card.Img variant="top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ-HAN6UFnIHXs29W0hyYpQHh-7TOAgxzjbQ&usqp=CAU" />
     <Card.Body>
       <Card.Title>{employee.username}</Card.Title>
@@ -37,7 +37,7 @@ return(
     })}
 
 
-  </>
+  </div>
 )
 
 

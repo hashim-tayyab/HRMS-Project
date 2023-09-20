@@ -1,4 +1,6 @@
 const Leave = require('../../models/leaveModel/Leave');
+const Admin = require('../../models/adminModel/Admin');
+const Employee = require('../../models/employeeModel/Employee');
 
 class LeaveService {
     async applyForLeave(req, res){
@@ -21,10 +23,14 @@ class LeaveService {
 
     async viewLeaveReq(req, res) {
         try {
-            const leave = Leave.findOne(
+            if(req.params.userId){
+            const leave = await Leave.find(
                 {admin: req.params.userId},
-            ).lean();
+            ).populate('employee');
+            console.log(leave);
             return leave;
+        }
+
         } catch (error) {
             console.log("Cannot view leave:", error);
         }
@@ -33,7 +39,7 @@ class LeaveService {
 
     async viewLeaveApplied(req, res){
         try {
-            const leaves = await Leave.findOne(
+            const leaves = await Leave.find(
                 { employee: req.params.userId,
                 // employee: req.params.userId,
             }).lean();
@@ -47,13 +53,24 @@ class LeaveService {
 
     async updateLeaveStatus(req, res) {
         try {
+            if(req.params.userId){
             const leave = Leave.findOneAndUpdate(
-                {admin: req.params.userId},
+                {employee: req.params.userId},
                 { $set: { reqStatus: req.body.status } },
             )
             return leave;
+        }
         } catch (error) {
             console.log("Cannot update leave status:", error);
+        }
+    }
+
+    async getAdmins(){
+        try {
+            const admins = Admin.find();
+            return admins;
+        } catch (error) {
+            console.log("Cannot find admins", error);
         }
     }
 

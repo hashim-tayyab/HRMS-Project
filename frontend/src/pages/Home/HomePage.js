@@ -23,23 +23,25 @@ function HomePage() {
 ;    }
   }, [currentUser, adminStatus, setAdminStatus]);
   return (
-    <div>
+    <div className='login_page'>
         
         {!isLoggedIn ?
           (
           <Container className='home_page'>
             <Row>
             <h3>Welcome To HRMS</h3>
+              <Col sm>
+                
+              </Col>
               <Col lg={true} className='login-field'><br/>
                 <Login/><br/><br/>
+                <p style={{fontSize:'15px'}}>Don't have an account?
+              <br/>
+                <Link to="/signup" style={{color: 'darkturquoise'}}>Sign Up</Link><br/><br/></p>
               </Col>
-              <Col sm></Col>
               <Col sm className='image'></Col>
             </Row><br/>
-    
-            <p>Don't have an account?
-              <br/>
-                <Link to="/signup"><button >Sign Up</button></Link><br/><br/></p>
+
            </Container>
           ):(
           <>
