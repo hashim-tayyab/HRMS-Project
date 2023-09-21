@@ -6,6 +6,7 @@ import { UserContext } from '../Context/userContext';
 import {StatusContext} from '../Context/statusContext';
 import axios from 'axios';
 import { Card } from "react-bootstrap";
+import './Graph.css';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement,Title,Tooltip,Legend);
 
@@ -24,27 +25,27 @@ const option = {
             callback: function(label, index, labels) {
                 switch (label) {
                     case 0:
-                        return '00:00:00';
+                        return '00:00';
                     case 1:
-                        return '01:00:00';
+                        return '01:00';
                     case 2:
-                        return '02:00:00';
+                        return '02:00';
                     case 3:
-                        return '03:00:00';
+                        return '03:00';
                     case 4:
-                        return '04:00:00';
+                        return '04:00';
                     case 5:
-                        return '05:00:00';
+                        return '05:00';
                     case 6:
-                        return '06:00:00';
+                        return '06:00';
                     case 7:
-                        return '07:00:00';
+                        return '07:00';
                     case 8:
-                        return '08:00:00';
+                        return '08:00';
                     case 9:
-                        return '09:00:00';
+                        return '09:00';
                     case 10:
-                        return '10:00:00'
+                        return '10:00'
                 }
             }
         },
@@ -76,7 +77,10 @@ const option = {
   
     function formatDate(date){
       var date = new Date(date);
-      var fullDate = date.toString().split(' ')[1]+''+date.getDate() +',' + date.getFullYear();
+      // var fullDate = date.toString().split(' ')[1]+''+date.getDate() +',' + date.getFullYear();
+      var fullDate = date.toLocaleString(
+        'default', {weekday: 'short'}
+      );
       return fullDate;
     }
   
@@ -111,6 +115,8 @@ const option = {
         getAttendance();
         if (attendance && isLoaded){
            const getDates =  attendance.map((att) => formatDate(att.date));
+          // attendance.today.toString().split(' ')[1]
+          // const getDates = attendance.map((att) => att.date.toString().split(' ')[1]);
             const getDurations = attendance.map((att) =>timeSpent(att.check_out_time, att.check_in_time));
         
             setLabels(getDates);
@@ -127,7 +133,23 @@ const data = {
       {
         label: "Time Duration",
         data: convertToHours(durationData),
-        backgroundColor: "green",
+        
+        backgroundColor: [
+          "rgba(255, 99, 132, 0.2)",
+          "rgba(54, 162, 235, 0.2)",
+          "rgba(255, 206, 86, 0.2)",
+          "rgba(75, 192, 192, 0.2)",
+          "rgba(153, 102, 255, 0.2)",
+        ],
+        borderColor: [
+          "rgba(255, 99, 132, 1)",
+          "rgba(54, 162, 235, 1)",
+          "rgba(255, 206, 86, 1)",
+          "rgba(75, 192, 192, 1)",
+          "rgba(153, 102, 255, 1)",
+        ],
+        borderWidth: 1,
+        // backgroundColor: "green",
       },  
     ],
   
@@ -135,7 +157,8 @@ const data = {
 
     return (
       <div className="bar-graph">
-        <Card style={{backgroundColor: 'gainsboro', padding: '10px'}}>
+        <Card style={{backgroundColor: "white", height:'35vh', width:'50vh', borderRadius:'20px',
+            boxShadow:'0 10px 20px #0000000a, 0 2px 6px #0000000a, 0 0 1px #0000000a' }}>
         <Bar options={option} data={data} />
         </Card>
       </div>

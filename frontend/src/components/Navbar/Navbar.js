@@ -27,8 +27,14 @@ useEffect(() => {
 
 
   return (
-    <Navbar style={{height: "55px"}}>
-        <Navbar.Brand href="/">Welcome to HRMS</Navbar.Brand>
+    <Navbar style={{height: "30px"}}>
+        <Navbar.Brand href="/">
+          <img 
+          src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIZZAznoyHG3OA3_MivoorOXD44ShpazZqGQ&usqp=CAU'
+          // width= '100'
+          height='35'
+          />
+        </Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
         {isLoggedIn? 
@@ -37,7 +43,7 @@ useEffect(() => {
       <div>
          <Dropdown
           align={{ lg: 'end' }}>
-          <Dropdown.Toggle style={{backgroundColor:'gainsboro', border:'none', color:'black'}} id="dropdown-basic">
+          <Dropdown.Toggle style={{backgroundColor:'white', border:'none', color:'black'}} id="dropdown-basic">
           {currentUser.username} &nbsp;
           <Navbar.Brand href="#home">
             {currentUser.imageUrl? (

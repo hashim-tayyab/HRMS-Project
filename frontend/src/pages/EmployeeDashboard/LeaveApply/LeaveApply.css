@@ -44,3 +44,12 @@
     padding-left: 20px;
     font-family: cursive;
 }
+
+
+
+.react-datepicker__input-container .react-datepicker__calendar-icon {
+    position: absolute;
+    padding: unset !important;
+    margin-top: 10px;
+    margin-left: 3px;
+}

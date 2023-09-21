@@ -24,9 +24,6 @@ import LeaveRequests from './pages/Dashboard/LeaveRequests/LeaveRequests';
 import {decodeToken } from 'react-jwt';
 import axios from 'axios';
 
-
-
-import SideNavBar from './pages/EmployeeDashboard/Sidebar/Sidebar';
 function App() {
 
   const [currentUser, setCurrentUser] = useState(null);

@@ -12,7 +12,7 @@ import './Sidebar.css'
 
 const SideNavBar = () => {
   return (
-      <CDBSidebar textColor="#333" backgroundColor="#f0f0f0">
+      <CDBSidebar textColor="#333" backgroundColor="#ffffff">
         <CDBSidebarHeader prefix={<i className="fa fa-bars" />}>
           Quick Access
         </CDBSidebarHeader>

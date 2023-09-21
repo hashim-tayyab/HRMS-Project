@@ -83,7 +83,7 @@ function LeaveApply() {
               <div className="start_date">
                 <div className="selStart">Start date: </div>
                 <DatePicker
-                showIcon
+                showIcon={true}
                   className="startDate"
                   selected={startDate}
                   onChange={(startDate) => {
