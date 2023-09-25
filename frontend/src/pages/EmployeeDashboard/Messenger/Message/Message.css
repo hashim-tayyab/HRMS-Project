@@ -1,25 +1,27 @@
 .textMessage{
     padding: 10px;
-    border-radius: 20px;
-    background-color: #1877f2;
+    border-radius: 10px;
+    background-color: dodgerblue;
     color: white;
     max-width: 300px;
+    font-size: 20px;
 }
 .message {
     display: flex;
     flex-direction: column;
   }
 
-.messageTop{
+/* .messageTop{
     height: 70px;
-}
+} */
 
 .message.own{
     align-items: flex-end;
 }
 
 .message.own .textMessage{
-    background-color: rgb(245, 241, 241);
+    background-color: #ECECEC;
+    /* background-color: rgb(245, 241, 241); */
     color: black;
 }
 

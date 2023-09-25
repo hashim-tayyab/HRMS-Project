@@ -2,9 +2,10 @@
     border-right: solid 3px #f0f0f0;
     background-color: #f0f0f0;
     height: 80vh;
+    /* width: 20vh; */
 }
 
-.chat-col.col-6{
+.chat-col.col-8{
     border-right: solid 3px gainsboro;
 }
 
@@ -40,42 +41,43 @@
     display: flex;
   }
   
-  /* Style for the textarea */
-  textarea {
-    width: 85%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    resize: vertical; /* Allow vertical resizing */
-    height: 50px; /* Minimum height */
+textarea {
+  width: 85%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: vertical; /* Allow vertical resizing */
+  height: 50px; /* Minimum height */
 
-    font-size: 16px;
-    line-height: 1.5;
-    overflow:hidden;
-    align-items: center;
-  }
-  
-  /* Style for the textarea when focused */
-  textarea:focus {
-    outline: none;
-    border-color: #007bff; /* Change border color on focus */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a subtle shadow on focus */
-  }
-  
-  /* Style for a send button (optional) */
-  .send-button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 8px 12px;
-    margin-left: 10px;
-    cursor: pointer;
-  }
-  
-  /* Style for a send button when disabled (optional) */
-  .send-button[disabled] {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-  
+  font-size: 16px;
+  line-height: 1.5;
+  overflow:hidden;
+  align-items: center;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #007bff; /* Change border color on focus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a subtle shadow on focus */
+}
+
+.send-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.send-button[disabled] {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+
+.messenger-container.container{
+  margin-left: 20px;
+  margin-right: 20px;
+}

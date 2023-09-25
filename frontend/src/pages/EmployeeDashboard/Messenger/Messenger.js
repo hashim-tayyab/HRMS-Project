@@ -9,6 +9,7 @@ import axios from 'axios';
 import {UserContext} from '../../../components/Context/userContext';
 import {io} from 'socket.io-client';
 import { sendArrow } from '../../../assets/assets';
+import SideNavBar from '../Sidebar/Sidebar';
 
 function Messenger() {
     const [conversation, setConversation] = useState([]);
@@ -108,7 +109,9 @@ function Messenger() {
 
   return (
     <div>
-        <Container>
+        
+        <Container className='messenger-container'>
+       
             <Row>
                 {conversation? (
                 <Col className='converse-col'>
@@ -122,7 +125,8 @@ function Messenger() {
                     <Col></Col>
                 )
                 }
-                <Col className='chat-col' xs={6}>
+                <Col className='chat-col' xs={8}>
+                    <div>Hello</div>
                     {currentChat?(
                     <div className='chatboxWrapper'>
                         <div className='chatBoxTop'>
@@ -136,16 +140,18 @@ function Messenger() {
                         <div className='textarea-container'>
                                 <textarea onChange = {(e) => setNewMessages(e.target.value)} 
                                 className='writeMessage' placeholder='Write something..'></textarea>
-                                <span className="send-button" onClick={handleSubmit}>{sendArrow}</span>
+                                <span className="send-button" onClick={handleSubmit}
+                                style={{fontSize: "20px"}}
+                                >Send {sendArrow}</span>
                             </div>
                     </div>):(<>Open a conversation</>)
                     }
 
                 </Col>    
                 
-                <Col>
-                    {/* Online */}
-                </Col>
+                {/* <Col> */}
+                <SideNavBar/>
+                {/* </Col> */}
 
             </Row>    
         </Container>

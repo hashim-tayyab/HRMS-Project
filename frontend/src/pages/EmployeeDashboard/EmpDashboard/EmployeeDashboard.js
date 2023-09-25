@@ -12,6 +12,7 @@ import Graph from "../../../components/Graphs/Graphs";
 import SideNavBar from '../Sidebar/Sidebar';
 import GetHours from "../GetHours/GetHours";
 import CheckInCheckOut from "../CheckInCheckOut/CheckInCheckOut";
+import MyLeaves from "../MyLeaves/MyLeaves";
 
 function EmployeeDashboard() {
   function formatDate(date) {
@@ -131,52 +132,6 @@ function EmployeeDashboard() {
           <Row style={{height:''}}>
             <Col>
             <CheckInCheckOut/>
-              {/* <Card style={{backgroundColor: "white", height:'35vh', width:'50vh', borderRadius:'20px',
-            boxShadow:'0 10px 20px #0000000a, 0 2px 6px #0000000a, 0 0 1px #0000000a' }}>
-                <Card.Body>
-                  <div className="checkin_logo" style={{display:'flex', alignItems:'center', justifyContent:'space-around', width:'100%'}}>
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9GY712mF3kaXkZv9ONcAMMJ0TcQm8kWbeFA&usqp=CAU"
-                    height='70px'
-                    />
-                  {!checkedIn ? (
-                    <Button style={{    minWidth: 'fit-content',
-                    display: 'flex',
-                    alignItems: 'center',
-                    height: '30px',
-                    borderRadius: '30px'}} variant="outline-primary" onClick={setTime}>
-                      Check In
-                    </Button>
-                  ) : (
-                    <Button style={{ minWidth: 'fit-content',
-                    display: 'flex',
-                    alignItems: 'center',
-                    height: '30px',
-                    borderRadius: '30px'}} variant="outline-primary" onClick={setOutTime}>
-                      Check Out
-                    </Button>
-                  )}
-                                    </div>
-
-                  <Card.Subtitle>{todayDate}</Card.Subtitle>
-                  <Row style={{width: '90%'}}>
-                    <Col style={{marginTop:'0px', paddingTop:'0px', textAlign:'start'}}>
-                  <Card.Text>IN </Card.Text>
-                  </Col>
-                    <Col style={{marginTop:'0px' ,paddingTop:'0px'}}>
-                  <Card.Text>{checkInTime} </Card.Text>
-                  </Col>
-                  </Row>
-
-                  <Row style={{width: '90%'}}>
-                    <Col style={{marginTop:'0px', paddingTop:'0px', textAlign:'start'}}>
-                  <Card.Text>OUT </Card.Text>
-                  </Col>
-                    <Col style={{marginTop:'0px', paddingTop:'0px'}}>
-                  <Card.Text>{checkOutTime} </Card.Text>
-                  </Col>
-                  </Row>
-                </Card.Body>
-              </Card> */}
             </Col>
 
             <Col>
@@ -190,7 +145,9 @@ function EmployeeDashboard() {
             <Col>
                   <GetHours/>
             </Col>
-            <Col></Col>
+            <Col>
+              <MyLeaves/>
+            </Col>
             <Col></Col>
 
           </Row>

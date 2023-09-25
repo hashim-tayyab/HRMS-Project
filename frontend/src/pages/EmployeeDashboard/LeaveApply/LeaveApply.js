@@ -12,6 +12,9 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Dropdown from 'react-bootstrap/Dropdown';
 import { Table } from "react-bootstrap";
+import Calender from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+
 
 function LeaveApply() {
   const navigate = useNavigate();
@@ -20,6 +23,11 @@ function LeaveApply() {
   const [leaveApplied, setLeaveApplied] = useState([]);
   const { currentUser, setCurrentUser } = useContext(UserContext);
   const [admins, setAdmins] = useState([]);
+  const [range, setRange] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+
+
 
   function formatDate(date){
     var date = new Date(date);
@@ -33,8 +41,15 @@ function LeaveApply() {
           `http://localhost:4000/viewemployeeleaves/${currentUser._id}`
         );
         if (getLeaveApplied) {
-            console.log(getLeaveApplied);
           setLeaveApplied(getLeaveApplied.data);
+          getLeaveApplied.data.map(((l) => {
+            setRange([l.appliedFrom, l.appliedTill]);
+          }))
+
+          if(range.length){
+            setIsLoaded(true);
+          }
+          // console.log(range);
         }
 
         const getApprovingPerson = await axios.get('http://localhost:4000/adminlist');
@@ -45,7 +60,7 @@ function LeaveApply() {
       }
     };
     getleaves();
-  }, [currentUser]);
+  }, [currentUser, range.length]);
 
   const handleLeaveSubmit = async () => {
     try {
@@ -78,12 +93,16 @@ function LeaveApply() {
         <Row>
           <Col>
             <Card className="leaveApply">
-              <h2 className="applyheader">Leave Application</h2>
+              <h2 className="applyheader">Add Leave Request</h2>
               <br />
+              <div className="emp-name">
+                <div>Employee Name:</div>
+                <div>{currentUser ? <>{currentUser.username}</> : null}</div>
+              </div>
               <div className="start_date">
                 <div className="selStart">Start date: </div>
                 <DatePicker
-                showIcon={true}
+                  showIcon={true}
                   className="startDate"
                   selected={startDate}
                   onChange={(startDate) => {
@@ -93,32 +112,49 @@ function LeaveApply() {
               </div>
               <div className="start_date">
                 <div className="selEnd">End date: </div>
-                <DatePicker 
-                className="endDate"
-                showIcon = {true}
+                <DatePicker
+                  className="endDate"
+                  showIcon={true}
                   selected={endDate}
                   onChange={(endDate) => {
                     setEndDate(endDate);
                   }}
                 />
               </div>
-              <div className="start_date">
+              <div className="approving-person">
                 <div>Approving Person: </div>
-              <Dropdown>
-                <Dropdown.Toggle style={{backgroundColor: 'transparent', 
-                color: 'black', width:'340px', borderColor: 'gainsboro'}} id="dropdown-basic">
-                   <span style={{textAlign: 'start'}}>Select..</span>
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  { admins.map((admin) =>  (                  
-                    <Dropdown.Item key={admin._id} href="#/action-1">{admin.username}</Dropdown.Item>
+                <Dropdown>
+                  <Dropdown.Toggle
+                    style={{
+                      backgroundColor: "transparent",
+                      color: "black",
+                      width: "100%",
+                      borderColor: "gainsboro",
+                    }}
+                    id="dropdown-basic"
+                  >
+                    <span style={{ textAlign: "start", fontSize: "14px" }}>
+                      Select..
+                    </span>
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    {admins.map((admin) => (
+                      <Dropdown.Item key={admin._id} href="#/action-1">
+                        {admin.username}
+                      </Dropdown.Item>
                     ))}
-                </Dropdown.Menu>
+                  </Dropdown.Menu>
                 </Dropdown>
               </div>
               <div className="start_date">
                 <div>Reason: </div>
-                <textarea style={{width: '340px', borderRadius: '10px', borderColor: 'gainsboro'}}></textarea>
+                <textarea
+                  style={{
+                    width: "340px",
+                    borderRadius: "10px",
+                    borderColor: "gainsboro",
+                  }}
+                ></textarea>
               </div>
               <div>
                 <Button variant="secondary" onClick={handleLeaveSubmit}>
@@ -130,32 +166,46 @@ function LeaveApply() {
           <Col>
             <div>
               {leaveApplied ? (
-               <>
-                <Card className="leaveApply">
-                <h2 className="applyheader">Previous Leaves</h2>
-                <Table className='tb' style={{padding: '0.2rem'}}>
-                <thead>
-                  <tr>
-                    <th>FROM</th>
-                    <th>TO</th>
-                    <th>STATUS</th>
-                  </tr>
-                </thead>
-                <tbody>
-               {leaveApplied.map((l) => { return (
-                    <tr key={l._id}>
-                        <td>{formatDate(l.appliedFrom)}</td>
-                        <td>{formatDate(l.appliedTill)}</td>
-                        <td>{l.reqStatus}</td>
-                    </tr>
-              )})}</tbody></Table>
-               </Card>
-
-              </>
+                <>
+                  <Card className="leaveApply">
+                    <h2 className="applyheader">Previous Leaves</h2>
+                    <Table className="tb" style={{ padding: "0.2rem" }}>
+                      <thead>
+                        <tr>
+                          <th>FROM</th>
+                          <th>TO</th>
+                          <th>STATUS</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {leaveApplied.map((l) => {
+                          return (
+                            <tr key={l._id}>
+                              <td>{formatDate(l.appliedFrom)}</td>
+                              <td>{formatDate(l.appliedTill)}</td>
+                              <td>{l.reqStatus}</td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </Table>
+                  </Card>
+                </>
               ) : (
                 <div>No leaves applied</div>
               )}{" "}
             </div>
+          </Col>
+          <Col>
+              <div className="calendar-container">
+{range.length  ? (    
+              
+                <Calender 
+                selectRange={true}
+                defaultValue={range}
+                />):(<></>)
+                }
+              </div>
           </Col>
         </Row>
       </Container>

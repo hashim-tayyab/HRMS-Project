@@ -23,6 +23,7 @@ import Messenger from './pages/EmployeeDashboard/Messenger/Messenger';
 import LeaveRequests from './pages/Dashboard/LeaveRequests/LeaveRequests';
 import {decodeToken } from 'react-jwt';
 import axios from 'axios';
+import VideoCall from './pages/EmployeeDashboard/Messenger/VideoCall/VideoCall';
 
 function App() {
 
@@ -94,6 +95,7 @@ function App() {
                 <Route path='/applyleave' element={<LeaveApply/>}/>
                 <Route path='/fellowemployees' element={<ViewFellowEmployees/>}/>
                 <Route path='/messenger' element={<Messenger/>}/>
+                <Route path='/call' element={<VideoCall/>}/>
 
              </Routes>     
           </StatusContext.Provider>
