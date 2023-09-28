@@ -1,4 +1,4 @@
-.dBoard a{
+/* .dBoard a{
     margin-left: 40px;
     display: flex;
     height: 100px;
@@ -26,4 +26,11 @@
     align-items: center;
     justify-content: center;
     display: flex;
+} */
+
+
+
+.dboard-container.container{
+    margin-left: 10px;
+    margin-right: 10px;
 }

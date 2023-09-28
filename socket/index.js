@@ -9,12 +9,26 @@ let users = [];
 
 const addUser = (userId, socketId) => {
     !users.some((user) => user.userId === userId) &&
-    users.push({userId, socketId})
+    users.push({userId, socketId});
+    // console.log(users);
 }
+
+let videoUsers = [];
+const addVideoUser = (userId, socketId) => {
+    !videoUsers.some((user) => user.userId === userId) &&
+    videoUsers.push({userId, socketId});
+    // console.log(videoUsers);
+}
+
+const removeVidUser = (socketId) => {
+    videoUsers = videoUsers.filter((user) => user.socketId !== socketId);
+}
+
+
+
 const removeUser = (socketId) => {
     users = users.filter((user) => user.socketId !== socketId);
 }
-
 
 const getUser = (userId) => {
     return users.find((user) => user.userId === userId);
@@ -22,6 +36,7 @@ const getUser = (userId) => {
 
 io.on("connection", (socket) => {
     console.log("User Connected");
+    // console.log(users);
 
     //Connecting new user
     socket.on("addUser", (userId) => {
@@ -45,6 +60,8 @@ io.on("connection", (socket) => {
     socket.on("disconnect", ()=>{
         console.log("User Disconnected");
         removeUser(socket.id);
+        removeVidUser(socket.id);
+        io.emit("getVidUsers", videoUsers)
         io.emit("getUsers", users);
     })
 
@@ -52,12 +69,18 @@ io.on("connection", (socket) => {
                         //ADDING VIDEO CALL
     
 
-    socket.emit("me", socket.id)
+    socket.emit("me", (socket.id));
 
-    socket.on("dc", () => {
-		socket.broadcast.emit("callEnded")
-	})
 
+    socket.on("addVidUser", (userId) => {
+        if(userId!==null){
+            // console.log(userId)
+        addVideoUser(userId, socket.id);
+        io.emit("getVidUsers", videoUsers);
+        }
+    })
+
+    //checking online users
 
     socket.on("callUser", (data) => {
         io.to(data.userToCall).emit("callUser",{
@@ -68,7 +91,8 @@ io.on("connection", (socket) => {
     })
 
     socket.on("answerCall", (data) => {
-        io.to(data.to).emit("callAccepted", data.signal)
+        io.to(data    // socket.emit('onlineUsers', );
+        .to).emit("callAccepted", data.signal)
     })
 
 

@@ -83,6 +83,34 @@ class AttendanceService {
     }
 
 
+    async getTotalCheckIns(req, res) {
+        try {
+            const attList = await Promise.all(
+            req.body.em.map(async (emp) => {
+            const attCount = await Attendance.findOne(
+            { employee: emp._id },
+            { 
+                count: { $size: '$attendance' },
+            },            
+            ).lean(); 
+            var position = parseInt(attCount.count) - 1;
+            const attendance = await Attendance.findOne(
+                {employee: emp._id},
+                {
+                    checkInDate: { $arrayElemAt: ['$attendance.date', position]},
+                    userCheckedInTime: { $arrayElemAt: ['$attendance.check_in_time', position] },
+                },
+                ).lean();
+                return attendance;
+            })
+            )
+            return attList;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
     async getCheckOutTime(req, res) {
         try {        
             const attCount = await Attendance.findOne(

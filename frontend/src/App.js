@@ -25,6 +25,10 @@ import {decodeToken } from 'react-jwt';
 import axios from 'axios';
 import VideoCall from './pages/EmployeeDashboard/Messenger/VideoCall/VideoCall';
 
+import AdminSidebar from './pages/Dashboard/AdminSidebar/AdminSideBar'
+
+// import SideNavBar from './pages/EmployeeDashboard/Sidebar/Sidebar';
+
 function App() {
 
   const [currentUser, setCurrentUser] = useState(null);
@@ -33,6 +37,7 @@ function App() {
   const [adminStatus, setAdminStatus] = useState(false);
   const location = useLocation();
   const isLoginPage = location.pathname === '/';
+  const isAdminDashboard = location.pathname === '/dashboard';
 
 
   useEffect(() =>{
@@ -73,7 +78,10 @@ function App() {
       <div className="App">
           <UserContext.Provider value={{currentUser, setCurrentUser}}>
             <StatusContext.Provider value={{adminStatus, setAdminStatus}}>
-              {isLoginPage ? null : <MyNavbar />}
+              {/* <div style={{display:'flex'}}> */}
+            {/* {isAdminDashboard? <AdminSidebar/>:null} */}
+              {isLoginPage ? null : <MyNavbar /> }
+              {/* </div> */}
               <Routes>
                 <Route path='/' element={<HomePage/>}/>
                 <Route path='/signup' element={<SignupForm/>} />

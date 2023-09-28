@@ -5,7 +5,8 @@ import { UserContext } from '../Context/userContext';
 import { useNavigate } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 
-
+// import SideNavBar from '../../pages/EmployeeDashboard/Sidebar/Sidebar';
+// import { Container, Row, Col } from 'react-bootstrap';
 
 
 function MyNavbar() {
@@ -47,16 +48,16 @@ useEffect(() => {
           {currentUser.username} &nbsp;
           <Navbar.Brand href="#home">
             {currentUser.imageUrl? (
-              <div className='imgg'>
+              // <></>
+            //   <div className='imgg'>
             <img 
               style={{borderRadius: '50%'}} 
               src= {currentUser.imageUrl}
               width="30"
               height="30"
-              className="d-inline-block align-top"
-              
-            />
-            </div>
+              className="d-inline-block align-top" 
+            /> 
+            // </div>
             ):(
             <>
               <img style={{borderRadius: '50%'}} src= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZTQ3UJipAxvQpwl7MffTRf5Ia0InpL_IZZw&usqp=CAU"

@@ -3,7 +3,8 @@ const {
     addCheckOutTime, 
     getCheckInTime, 
     getCheckOutTime,
-    getAttendance } = require('../../services/attendanceService/attendanceService');
+    getAttendance,
+    getTotalCheckIns } = require('../../services/attendanceService/attendanceService');
 
 class AttendanceController {
     async addCheckInTime(req, res) {
@@ -22,6 +23,15 @@ class AttendanceController {
        } catch (error) {
         console.log("Error while adding Check Out Time: ",error);
        }
+    }
+
+    async getTotalCheckIns(req, res){
+        try {
+            const checkins = await getTotalCheckIns(req);
+            return res.status(200).json(checkins);
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     async getCheckInTime(req, res) {

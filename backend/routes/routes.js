@@ -32,12 +32,14 @@ router.get('/employee/:userId', employeeController.getEmployeeById);
 router.get('/fellowemployees/:company', employeeController.getFellowEmployees);
 
 
+
 //Attendant Routes
 router.post('/addcheckin/:userId', attendanceController.addCheckInTime);
 router.post('/addcheckout/:userId', attendanceController.addCheckOutTime);
 router.get('/checkintime/:userId', attendanceController.getCheckInTime);
 router.get('/checkouttime/:userId', attendanceController.getCheckOutTime);
 router.get('/attendance/:userId', attendanceController.getAttendance);
+router.post('/totalcheckins', attendanceController.getTotalCheckIns);
 
 
 

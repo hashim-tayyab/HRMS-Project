@@ -23,6 +23,8 @@ function LeaveApply() {
   const [leaveApplied, setLeaveApplied] = useState([]);
   const { currentUser, setCurrentUser } = useContext(UserContext);
   const [admins, setAdmins] = useState([]);
+
+  const [approver, setApprover] = useState();
   const [range, setRange] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -62,8 +64,15 @@ function LeaveApply() {
     getleaves();
   }, [currentUser, range.length]);
 
+
+  const handleSetApprover = (e) => {
+    setApprover(e.target.innerHTML);
+  }
+
+
   const handleLeaveSubmit = async () => {
     try {
+      console.log('Approver: ',approver);
       var today = new Date();
       var date =
         today.getDate() +
@@ -75,7 +84,8 @@ function LeaveApply() {
       const req = await axios.post(
         `http://localhost:4000/applyleave/${currentUser._id}`,
         {
-          admin: "64fffdb87a7d46dab2a5923d",
+          admin: "650582e31fdd67afd24d0677",
+          // admin: "64fffdb87a7d46dab2a5923d",
           dateApplied: date,
           appliedFrom: startDate,
           appliedTill: endDate,
@@ -139,7 +149,7 @@ function LeaveApply() {
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
                     {admins.map((admin) => (
-                      <Dropdown.Item key={admin._id} href="#/action-1">
+                      <Dropdown.Item key={admin._id} onClick={(e) => handleSetApprover(e)}>
                         {admin.username}
                       </Dropdown.Item>
                     ))}

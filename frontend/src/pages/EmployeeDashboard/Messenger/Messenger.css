@@ -1,12 +1,14 @@
-.converse-col.col{
+.converse-col.col-3{
     border-right: solid 3px #f0f0f0;
     background-color: #f0f0f0;
-    height: 80vh;
+    padding-top:0px;
+    /* height: 80vh; */
     /* width: 20vh; */
 }
 
 .chat-col.col-8{
     border-right: solid 3px gainsboro;
+    height: 90vh;
 }
 
 .chatTextArea{
@@ -23,10 +25,15 @@
 }
 
 .chatBoxTop{
-    height: 68vh;
+    height: 80vh;
     overflow-y: scroll;
 }
 
+
+.writeMessage{
+  border-radius: 20px;
+height: 50px;
+}
 
 
 

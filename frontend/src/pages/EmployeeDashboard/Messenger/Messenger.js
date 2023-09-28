@@ -10,6 +10,10 @@ import {UserContext} from '../../../components/Context/userContext';
 import {io} from 'socket.io-client';
 import { sendArrow } from '../../../assets/assets';
 import SideNavBar from '../Sidebar/Sidebar';
+import ViewFellowEmployees from '../ViewFellowEmployees/ViewFellowEmployees';
+import { downLeftArrow } from '../../../assets/assets';
+import { Navigate, Link, useNavigate } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 
 function Messenger() {
     const [conversation, setConversation] = useState([]);
@@ -20,6 +24,8 @@ function Messenger() {
     const socket = useRef();
     const scrollRef = useRef();
     const {currentUser, setCurrentUser} = useContext(UserContext);
+    const [onlineUsers, setOnlineUsers] = useState();
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -43,7 +49,8 @@ function Messenger() {
         if(currentUser?._id !== null){
         socket.current.emit("addUser", currentUser?._id);
         socket.current.on("getUsers",users => {
-            console.log(users);
+            // console.log(users);
+            setOnlineUsers(users);
         })
     }
     },[currentUser]);
@@ -112,9 +119,23 @@ function Messenger() {
         
         <Container className='messenger-container'>
        
-            <Row>
+            <Row style={{height: '90vh'}}>
                 {conversation? (
-                <Col className='converse-col'>
+                <Col className='converse-col' xs={3}>
+                    {currentUser?
+                    <div className='current-user'>
+                        <img style={{borderRadius: '50px'}} src={ currentUser.imageUrl}
+                        height='50px'
+                        width='50px'
+                        />
+
+                        {currentUser.username}
+                        <div>
+                            <span style={{fontSize:'13px', fontWeight:'500'}}>Active Chats</span>
+                        </div>
+                    </div>
+                    :<></>
+                    }
                 {
                 conversation.map((c) =>(
                     <div key={c._id} onClick={() => setCurrentChat(c)}>
@@ -126,9 +147,23 @@ function Messenger() {
                 )
                 }
                 <Col className='chat-col' xs={8}>
-                    <div>Hello</div>
+                    {/* <div style={{backgroundColor: 'blue'}}>
+                   
+                    <Link to={"/call"} state={ onlineUsers } >
+                        <button style={{backgroundColor:'green'}}>
+                            Call
+                            </button>
+                    </Link>
+                    </div> */}
+                    
                     {currentChat?(
                     <div className='chatboxWrapper'>
+                                  <div style={{justifyContent: 'end', backgroundColor: "gainsboro", marginBottom:'10px'}}>
+                                    <Link to={"/call"}>
+                                     <Button variant='success' >Call</Button>
+                                    </Link>
+                                  </div>
+
                         <div className='chatBoxTop'>
                         {messages.map((m) => (
                             <div key={m._id} ref={scrollRef}>
@@ -144,15 +179,27 @@ function Messenger() {
                                 style={{fontSize: "20px"}}
                                 >Send {sendArrow}</span>
                             </div>
-                    </div>):(<>Open a conversation</>)
+                    </div>)
+                    :
+                    (<div
+                    style={{
+                        fontSize: "50px",
+                        color: 'lightgray',
+                        textAlign: 'center',
+                        alignItems: 'center',
+                        marginTop: '20vh'
+                        }}
+                    >Open a conversation
+                    <br/>
+                    {downLeftArrow}
+                    </div>)
                     }
 
-                </Col>    
-                
-                {/* <Col> */}
-                <SideNavBar/>
-                {/* </Col> */}
-
+                </Col>  
+                <Col xs={1}>   
+                <span style={{fontSize: '15px', fontWeight:'600'}}>People</span>
+                    <ViewFellowEmployees/>
+                </Col>  
             </Row>    
         </Container>
     </div>

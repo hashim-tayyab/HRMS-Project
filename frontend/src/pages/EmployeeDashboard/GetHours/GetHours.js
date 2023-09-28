@@ -35,7 +35,11 @@ function GetHours() {
       const hours = Math.floor(decimalValue);
       const minutesDecimal = (decimalValue - hours) * 60;
       const minutes = Math.round(minutesDecimal);      
-      return `${hours} : ${minutes}`;
+
+      const formattedMinutes = minutes.toString().padStart(2, '0');
+      const formattedHours = hours.toString().padStart(2, '0');
+
+      return `${formattedHours} : ${formattedMinutes}`;
     }
 
     useEffect(() => {

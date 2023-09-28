@@ -11,6 +11,8 @@ import './LoginForm.css'
 import Form from 'react-bootstrap/Form'
 import {PersistFormikValues} from 'formik-persist-values';
 // import { PaymentContext } from '../Context/paymentContext';
+import toast, { Toaster } from 'react-hot-toast';
+
 
 const initialValues={
   email: "",
@@ -22,6 +24,7 @@ var rem = Boolean(localStorage.getItem('remember-me'));
 const {currentUser, setCurrentUser} = useContext(UserContext);
 const {adminStatus, setAdminStatus} = useContext(StatusContext);
 const [isChecked, setIsChecked] = useState(rem !== null && rem !== undefined ? rem : false);
+const notify = () => toast('Here is your toast.');
 
 useEffect(() => {
   // console.log(currentUser);
@@ -54,8 +57,13 @@ useEffect(() => {
      const res = await axios.post('http://localhost:4000/login', {
         email: values.email,
         password: values.password,
+      }).catch(err =>{
+        console.error('err');
+
       });
         if(res.status == 200){
+          notify();
+          <Toaster/>
            await setCurrentUser(res.data.user);
           localStorage.setItem('token', res.data.token);
           const isAdmin = decodeToken(res.data.token).isAdmin;

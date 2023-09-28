@@ -9,6 +9,8 @@ import {
   CDBSidebarFooter,
 } from 'cdbreact';
 import './Sidebar.css'
+import { sendArrow, calanderMinus } from '../../../assets/assets';
+
 
 const SideNavBar = () => {
   return (
@@ -19,10 +21,13 @@ const SideNavBar = () => {
         <CDBSidebarContent>
           <CDBSidebarMenu>
           <Link to="/applyleave" relative="path">
-            <CDBSidebarMenuItem className='sideMenu' icon="th-large"><div className='menuItem'>Apply For Leave</div></CDBSidebarMenuItem>
+            <CDBSidebarMenuItem className='sideMenu' ><div className='menuItem' style={{color:'blue', fontSize:'20px', fontWeight:'bold'}}>{calanderMinus}&nbsp;&nbsp;Apply For Leave</div></CDBSidebarMenuItem>
             </Link>
-            <Link to="/fellowemployees" relative="path">
-            <CDBSidebarMenuItem className='sideMenu' icon="sticky-note"><div className='menuItem'>View Employees</div></CDBSidebarMenuItem>
+            <Link to="/messenger" relative="path">
+            <CDBSidebarMenuItem className='sideMenu'><div className='menuItem' style={{color:'green', fontSize:'20px', fontWeight:'bold'}}>{sendArrow} &nbsp;&nbsp;Messages</div></CDBSidebarMenuItem>
+            </Link>
+            <Link to="/call" relative="path">
+            <CDBSidebarMenuItem className='sideMenu'><div className='menuItem' style={{color:'red', fontSize:'20px', fontWeight:'bold'}}>{sendArrow} &nbsp;&nbsp;Video Call</div></CDBSidebarMenuItem>
             </Link>
           </CDBSidebarMenu>
         </CDBSidebarContent>

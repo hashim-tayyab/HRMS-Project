@@ -4,10 +4,12 @@ import { UserContext } from '../../../components/Context/userContext';
 import {Card, Table} from 'react-bootstrap';
 import {StatusContext} from '../../../components/Context/statusContext';
 import axios from 'axios';
+import './ViewFellowEmployees.css'
 
 function ViewFellowEmployees() {
     const {currentUser, setCurrentUser} = useContext(UserContext);
     const {adminStatus, setAdminStatus} = useContext(StatusContext);
+    const [fellow, setFellow] = useState();
     // const [isLoaded, setIsLoaded] = useState(false);
     const [empList, setEmpList] = useState([]);
   
@@ -22,20 +24,32 @@ function ViewFellowEmployees() {
     getList();
   }, [currentUser]);
 
+  const newConversation = async (empId) => {
+    try {
+        await axios.post("http://localhost:4000/conversation/", {
+            senderId: currentUser._id,
+            receiverId: empId,
+        })
+    } catch (error) {
+        
+    }
+  }
+
   return (
     <div>
         {empList?(
         <>
             {empList.map(emp => {
             return (
-            <Card style={{ width: '10rem', height: '8rem' }} key={emp._id}>
-                <Card.Body>
-                    <Card.Title>{emp.username}</Card.Title>
-                        <Card.Subtitle className="mb-2 text-muted">{emp.position}</Card.Subtitle>
-                            {emp.username !== currentUser.username ?(
-                            <Card.Link href="/messenger">Send a Message</Card.Link>):(null)}
-                </Card.Body>
-            </Card> )})}
+                <div key={emp._id}>
+            <img style={{borderRadius: '50px'}} src={emp.imageUrl}
+                height='50'
+                width='50'
+            /><br/>
+            {emp.username}
+            </div>
+            )})}
+            
         </>
         ):(
         <>
@@ -48,54 +62,3 @@ function ViewFellowEmployees() {
 }
 
 export default ViewFellowEmployees;
-
-
-
-
-
-
-
-
-// function GetAttendance() {
-
-
-
-
-//   return (
-//     <div>
-//        {isLoaded?(
-//         <Card className='attCard' style={{backgroundColor:'gainsboro'}}>
-//             <Card.Body>
-//               <Table className='tb' style={{padding: '0.2rem'}}>
-//                 <thead>
-//                   <tr>
-//                     <th>DATE</th>
-//                     <th>IN</th>
-//                     <th>OUT</th>
-//                     <th>DURATION</th>
-//                   </tr>
-//                 </thead>
-//                   <tbody>
-//                 {attendance.map((att) => 
-//                   <tr key={att._id}>
-//                     <td style={{width:'90px'}}>{formatDate(att.date)}</td>
-//                     <td>{formatTime(att.check_in_time)}</td>
-//                     <td>{formatTime(att.check_out_time)}</td>
-//                     <td>{timeSpent(att.check_out_time, att.check_in_time)}</td>
-//                   </tr>
-//                   )}
-//                 </tbody>            
-//               </Table>
-//             </Card.Body>
-//           </Card>
-//       ):(       
-//     <>
-//       Loading...
-//     </>
-//     ) 
-//     }
-//     </div>
-//   )
-// }
-
-// export default GetAttendance

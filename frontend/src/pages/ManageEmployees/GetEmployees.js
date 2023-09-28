@@ -23,8 +23,10 @@ return(
         {
        return (
        <Card  style={{ width: '18rem' }} key={employee._id}>
-        <Card.Img variant="top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ-HAN6UFnIHXs29W0hyYpQHh-7TOAgxzjbQ&usqp=CAU" />
-    <Card.Body>
+        {/* <Card.Img variant="top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ-HAN6UFnIHXs29W0hyYpQHh-7TOAgxzjbQ&usqp=CAU" /> */}
+        <Card.Img variant="top" src={employee.imageUrl} />
+   
+   <Card.Body>
       <Card.Title>{employee.username}</Card.Title>
       <Card.Subtitle className="mb-2 text-muted">{employee.position}</Card.Subtitle>
       <Card.Text>Company Name:
