@@ -24,9 +24,11 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 app.set('view engine', 'ejs');
 
+
+
+//Cron job to run at 12 am everyday
 const cron = require('node-cron');
-cron.schedule('0 21 17 * * *', getEmployees);
-// getEmployees();
+cron.schedule('0 0 * * *', getEmployees);
 
 connectMongoose();
 app.listen(process.env.PORT || 4000, () => {
