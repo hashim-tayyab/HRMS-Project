@@ -98,7 +98,7 @@ function App() {
 
 
 
-                <Route path='/loginemployee' element={<EmployeeLogin/>}/>
+                {/* <Route path='/loginemployee' element={<EmployeeLogin/>}/> */}
                 <Route path='/employeedashboard' element={<EmployeeDashboard/>}/>
                 <Route path='/applyleave' element={<LeaveApply/>}/>
                 <Route path='/fellowemployees' element={<ViewFellowEmployees/>}/>

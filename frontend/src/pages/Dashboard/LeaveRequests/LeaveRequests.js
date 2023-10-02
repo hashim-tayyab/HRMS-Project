@@ -10,7 +10,7 @@ function LeaveRequests() {
 
   const {currentUser} = useContext(UserContext);
   const [leaves, setLeaves] = useState([]);
-  const [empData, setEmpData] = useState([]);
+  // const [empData, setEmpData] = useState([]);
   const [leaveStatus, setLeaveStatus] = useState();
   
   useEffect(() => {
@@ -65,19 +65,33 @@ function LeaveRequests() {
     }
   }
 
+
+  function formatDate(date){
+    var date = new Date(date);
+    var fullDate = date.toString().split(' ')[1]+' '+date.getDate() +',' + date.getFullYear();
+    return fullDate;
+  }
+
+
   return (
-    <>
+    <div style={{display: 'flex',}}>
+    <h3>Leave Requests</h3>
       {leaves ? (
         <>
           {leaves.map((leave) => (
-            <Card className='leavecards' style={{height: 'fit-content'}} key={leave._id}>
-              <Card.Title>Name: {leave.employee.username}</Card.Title>
-              <Card.Subtitle>
-              <Dropdown>
-                <span>Status: </span>
+            <Card className='leavecards' style={{height: 'fit-content', width:'20vw',  alignItems:'stretch'}} key={leave._id}>
+              <Card.Subtitle style={{fontSize: '21px', paddingTop:'10px'}}><div>Name:</div> <div>{leave.employee.username}</div></Card.Subtitle>
+              <Card.Subtitle style={{fontSize: '21px', paddingTop:'10px'}}>
+                <div>From:</div><div>{formatDate(leave.appliedFrom)}</div></Card.Subtitle>
+
+                <Card.Subtitle style={{fontSize: '21px', paddingTop:'10px'}}>
+                <div>To:</div><div>{formatDate(leave.appliedTill)}</div></Card.Subtitle>
+
+              <Card.Subtitle><div>Status: </div>
+              <Dropdown  style={{ paddingTop:'10px'}}>
+                <div>
                 <Dropdown.Toggle  variant='outline-secondary'  style={{}}>
                   {leave.reqStatus}
-                    {/* {leave.reqStatus}  */}
                   <Dropdown.Menu>
                     {" "}
                     <Dropdown.Item onClick={(e) => setLeaveStatus(e.target.innerHTML + "ed")
@@ -91,6 +105,7 @@ function LeaveRequests() {
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown.Toggle>
+                </div>
               </Dropdown>
               </Card.Subtitle>
               <Button style={{width:'fit-content', marginTop: '20px'}} 
@@ -101,50 +116,10 @@ function LeaveRequests() {
       ) : (
         <></>
       )}
-    </>
+    </div>
   );
 
 
-// return (
-//   <div>
-//     {empData ? (
-//     <>
-//         {empData.map((data, index) => (
-//           <div key={empData[index]._id}>
-//          {/* <div key={leaves[index]._id}> */}
-//         <Card style={{height: 'fit-content'}}>
-//           {data ? (
-//             <div>
-//               <p>Name: {data.username}</p>
-//               <Dropdown>
-//               <span>Status: </span>
-//                 <Dropdown.Toggle variant="outline-secondary" id="dropdown-basic">
-//                 {/* {leaves[index].reqStatus} */}
-//                 </Dropdown.Toggle>
-//                 <Dropdown.Menu>
-//                   <Dropdown.Item 
-//                     onClick={(e) => updateLeaveStatus(leaves[index].employee, e.target.innerHTML+"ed")}
-//                     >Accept</Dropdown.Item>
-//                   <Dropdown.Item
-//                     onClick={(e) => updateLeaveStatus(leaves[index].employee, e.target.innerHTML+"ed")}
-//                   >Reject</Dropdown.Item>
-//                 </Dropdown.Menu>
-//             </Dropdown>
-//             </div>
-//           ) : (
-//             <p>Error: Invalid employee data</p>
-//           )}
-//         </Card>
-
-//         </div>
-//       ))}
-//       </>
-//       ):(
-//       <></>
-//       )
-//       }
-//   </div>
-//   )
 }
 
 export default LeaveRequests

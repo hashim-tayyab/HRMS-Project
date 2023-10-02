@@ -31,8 +31,10 @@ function MyLeaves() {
 
 
   return (
-    <Card className='leaves-card' style={{backgroundColor: "white", height:'35vh', width:'50vh', borderRadius:'20px',
-    boxShadow:'0 10px 20px #0000000a, 0 2px 6px #0000000a, 0 0 1px #0000000a'}}>
+    <div style={{display:'flex'}}>
+    <Card className='leaves-card' style={{ backgroundColor: "white", height:'35vh', width:'50vh', borderRadius:'20px',
+    boxShadow:'0 10px 20px #0000000a, 0 2px 6px #0000000a, 0 0 1px #0000000a',
+    }}>
       <Card.Subtitle>
         <img src='https://www.pngkey.com/png/detail/793-7939240_png-file-svg-absent-icon-png.png' 
            height='70'
@@ -43,6 +45,7 @@ function MyLeaves() {
     fontWeight: '500'}}>{numOfUsers}</Card.Body>
     
     </Card>
+    </div>
   )
 }
 

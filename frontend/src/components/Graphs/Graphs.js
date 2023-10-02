@@ -156,7 +156,7 @@ const data = {
   };
 
     return (
-      <div className="bar-graph">
+      <div className="bar-graph" style={{display:'flex'}}>
         <Card style={{backgroundColor: "white", height:'35vh', width:'50vh', borderRadius:'20px',
             boxShadow:'0 10px 20px #0000000a, 0 2px 6px #0000000a, 0 0 1px #0000000a' }}>
         <Bar options={option} data={data} />

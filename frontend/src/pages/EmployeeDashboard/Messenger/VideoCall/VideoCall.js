@@ -4,7 +4,7 @@ import { UserContext } from "../../../../components/Context/userContext";
 import Peer from "simple-peer";
 import './VideoCall.css';
 import axios from 'axios';
-// import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { makeCall , incomingCall} from "../../../../assets/assets";
 import Button from 'react-bootstrap/Button'
 
@@ -16,6 +16,7 @@ import Row from 'react-bootstrap/Row';
 const socket = io.connect("http://localhost:8900");
 
 function VideoCall() {
+  const navigate = useNavigate();
   const [me, setMe] = useState("");
   const [stream, setStream] = useState();
   const [receivingCall, setReceivingCall] = useState(false);
@@ -51,7 +52,7 @@ function VideoCall() {
       });
 
     socket.on("me", (id) => {
-      console.log("setting my socket ID", id)
+      // console.log("setting my socket ID", id)
       setMe(id);
     });
 
@@ -81,7 +82,7 @@ function VideoCall() {
 
 useEffect(() => {
   if(onlineUsers.length > 1){
-  console.log("onlineUsers", onlineUsers);
+  // console.log("onlineUsers", onlineUsers);
     const userWithDifferentId = onlineUsers.find(user => user.userId !== currentUser._id);
     setOtherSocketId(userWithDifferentId.socketId)
     setOtherUserId(userWithDifferentId.userId);
@@ -151,8 +152,11 @@ useEffect(() => {
 
 
   const leaveCall = () => {
-    setCallEnded(true);
-    connectionRef.current.destroy();
+    console.log("leaveCall");
+    navigate("/messenger")
+    window.location.reload();
+    // setCallEnded(true);
+    // connectionRef.current.destroy();
   };
 
 
@@ -178,7 +182,9 @@ useEffect(() => {
   }, [onlineUsers, userNamesCache]);
   
 
-
+// useEffect(() => {
+//   window.location.reload();
+// },[]);
 
 
 
@@ -269,7 +275,7 @@ useEffect(() => {
 
           <div className="callBtn">
             {callAccepted && !callEnded ? (
-              <button onClick={()=>leaveCall}>End Call</button>
+              <button onClick={leaveCall}>End Call</button>
             ) : (
 
               onlineUsers.length > 1 &&

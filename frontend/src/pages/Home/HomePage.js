@@ -29,7 +29,7 @@ function HomePage() {
           (
           <Container className='home_page'>
             <Row>
-            <h3>Welcome To HRMS</h3>
+            {/* <h3>Welcome To HRMS</h3> */}
               <Col sm>
                 
               </Col>

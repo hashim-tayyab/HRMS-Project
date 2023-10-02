@@ -134,7 +134,7 @@ function EmployeeDashboard() {
             <CheckInCheckOut/>
             </Col>
 
-            <Col>
+            <Col >
               <GetAttendance />
             </Col>
             <Col>

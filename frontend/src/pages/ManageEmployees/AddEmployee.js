@@ -6,7 +6,7 @@ import axios from 'axios';
 import { UserContext } from '../../components/Context/userContext';
 import './AddEmployee.css'
 import Button from 'react-bootstrap/Button'
-
+import Card from 'react-bootstrap/Card';
 
 
 const initialValues={
@@ -58,6 +58,8 @@ function AddEmployee() {
     }, [currentUser, setCurrentUser]);
 
     return (
+      <div style={{display:'flex'}}>
+      <Card style={{width:'fit-content', padding: '20px', marginLeft: '20px'}}>
     <Formik
     initialValues= {initialValues}
     // validationSchema= {signupSchema}
@@ -199,6 +201,12 @@ function AddEmployee() {
      </form>
     )}
     </Formik>
+    </Card>
+    <img src='https://www.nicepng.com/png/detail/355-3559564_file-add-employee-image-icon.png'
+    width='600'
+    height='600'
+    />
+    </div>
   );
 };
 

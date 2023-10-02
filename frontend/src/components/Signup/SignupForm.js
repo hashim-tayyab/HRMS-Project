@@ -8,6 +8,8 @@ import { PersistFormikValues } from 'formik-persist-values';
 import Container from 'react-bootstrap/esm/Container';
 import Row from 'react-bootstrap/esm/Row';
 import Col from 'react-bootstrap/esm/Col';
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 
 
 const initialValues={
@@ -26,6 +28,7 @@ function FormValidation() {
     <Container>
       <Row>
       <Col>
+      <Card style={{paddingLeft: '20px'}}>
     <Formik
     initialValues= {initialValues}
     validationSchema= {signupSchema}
@@ -45,6 +48,7 @@ function FormValidation() {
     
 {({values, errors, touched, handleBlur, handleChange, handleSubmit}) => (
      <form onSubmit={handleSubmit}>
+      <h4>Register Form</h4>
      <div className='name-block'>
           <label htmlFor="username">Name:</label>
           <br />
@@ -90,9 +94,9 @@ function FormValidation() {
         </div>
 
 
-        <div className='gender-block'>
+        <div className='gender-block' >
           <div id="my-radio-group">Select Gender:</div>
-          <div role="group" aria-labelledby="my-radio-group">
+          <div style={{marginLeft: '-180px'}} role="group" aria-labelledby="my-radio-group">
             <label>
               <Field type="radio" name="picked" value="male" />
               Male
@@ -139,12 +143,13 @@ function FormValidation() {
 
         <div>
             {/* <br /> */}
-          <button type='submit'>Register</button>
+          <Button variant='outline-success' type='submit' style={{marginTop: '20px'}}>Register</Button>
       </div>
       <PersistFormikValues name="signup-form" />
      </form>
     )}
     </Formik>
+    </Card>
     </Col>
     <Col></Col>
     </Row>
